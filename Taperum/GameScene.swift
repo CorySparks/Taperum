@@ -66,7 +66,7 @@ class GameScene: SKScene {
     func addSquare(){
         let nextSquare = square
         
-        let randomSquarePos = GKRandomDistribution(lowestValue: Int(base2.position.y - baseSize), highestValue: Int(base2.position.y + baseSize))
+        let randomSquarePos = GKRandomDistribution(lowestValue: Int(base2.position.x - baseSize), highestValue: Int(base2.position.x + baseSize))
         
         let position = CGFloat(randomSquarePos.nextInt())
         
