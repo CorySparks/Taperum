@@ -21,8 +21,6 @@ class GameScene: SKScene {
         
     override func didMove(to view: SKView) {
         
-        NSLog("CALLED DID MOVE")
-        
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
@@ -82,6 +80,15 @@ class GameScene: SKScene {
         
         self.addChild(square!)
         self.squareNodeStack.append(square)
+        if(squareNodeStack.count > 3){
+            updateCamera()
+        }
+    }
+    
+    func updateCamera() {
+        if let camera = camera {
+            camera.position = CGPoint(x: 0, y: self.squareNodeStack[self.squareNodeStack.count-1]!.position.y)
+        }
     }
     
     
