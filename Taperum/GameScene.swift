@@ -14,18 +14,18 @@ class GameScene: SKScene {
     private var base1 : SKShapeNode!
     private var base2 : SKShapeNode!
     private var platform : SKShapeNode!
-    private var square : SKShapeNode!
+    private var squareNodeStack : [SKShapeNode?] = []
     private var squareTimer : Timer!
     
     public var baseSize : CGFloat!
         
     override func didMove(to view: SKView) {
         
+        NSLog("CALLED DID MOVE")
         
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
-        self.square =  self.childNode(withName: "Square") as? SKShapeNode
         
         baseSize = (self.size.width + self.size.height) * 0.05
         
@@ -49,12 +49,6 @@ class GameScene: SKScene {
             base2.strokeColor = .white
             base2.position.y =  base1.position.y + baseSize
         }
-        
-        self.square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
-        if let square = self.square {
-            square.fillColor = .red
-            square.strokeColor = .red
-        }
 
         self.addChild(platform)
         self.addChild(base1)
@@ -64,16 +58,24 @@ class GameScene: SKScene {
     }
     
     func addSquare(){
-        let nextSquare = square
+        var square: SKShapeNode!
+        
+        square =  self.childNode(withName: "Square") as? SKShapeNode
+        
+        square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
+        if let s = square {
+            s.fillColor = .red
+            s.strokeColor = .red
+        }
         
         let randomSquarePos = GKRandomDistribution(lowestValue: Int(base2.position.x - baseSize), highestValue: Int(base2.position.x + baseSize))
         
         let position = CGFloat(randomSquarePos.nextInt())
         
-        nextSquare?.position = CGPoint(x: position, y: base2.position.y + baseSize)
+        square.position = CGPoint(x: position, y: base2.position.y + baseSize)
         
-        self.addChild(nextSquare!)
-        
+        self.addChild(square!)
+        self.squareNodeStack.append(square)
     }
     
     
