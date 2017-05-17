@@ -58,6 +58,16 @@ class GameScene: SKScene {
     }
     
     func addSquare(){
+        var lastSquarePosition: CGPoint
+        if(squareNodeStack.count > 0){
+            lastSquarePosition = squareNodeStack[squareNodeStack.count-1]!.position
+        }else{
+            lastSquarePosition = base2.position
+        }
+        
+        let randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
+        let randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+        
         var square: SKShapeNode!
         
         square =  self.childNode(withName: "Square") as? SKShapeNode
@@ -68,11 +78,7 @@ class GameScene: SKScene {
             s.strokeColor = .red
         }
         
-        let randomSquarePos = GKRandomDistribution(lowestValue: Int(base2.position.x - baseSize), highestValue: Int(base2.position.x + baseSize))
-        
-        let position = CGFloat(randomSquarePos.nextInt())
-        
-        square.position = CGPoint(x: position, y: base2.position.y + baseSize)
+        square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
         
         self.addChild(square!)
         self.squareNodeStack.append(square)
