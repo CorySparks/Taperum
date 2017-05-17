@@ -55,6 +55,21 @@ class GameScene: SKScene {
         squareTimer =  Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addSquare), userInfo: nil, repeats: true)
     }
     
+    override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+        if(squareNodeStack.count > 0){
+//          I'm trying to delete the square when it is below the screen
+//          Seems to me that the camera pos is so wierd and shit that I can't do it the way I want
+            print("camera y: " + String(describing: -(camera?.position.y)!))
+            print("square y: " + String(describing: squareNodeStack[0]?.position.y))
+            if (squareNodeStack[0]?.position.y)! > -(camera?.position.y)!{
+                print("deleting square")
+                squareNodeStack[0]?.removeFromParent()
+                squareNodeStack.remove(at: 0)
+            }
+        }
+    }
+    
     func addSquare(){
         var lastSquarePosition: CGPoint
         if(squareNodeStack.count > 0){
@@ -72,8 +87,8 @@ class GameScene: SKScene {
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let s = square {
-            s.fillColor = .red
-            s.strokeColor = .red
+            s.fillColor = .white
+            s.strokeColor = .white
         }
         
         square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
@@ -120,8 +135,4 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
 }
