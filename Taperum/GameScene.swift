@@ -60,12 +60,12 @@ class GameScene: SKScene {
         if(squareNodeStack.count > 0){
 //          I'm trying to delete the square when it is below the screen
 //          Seems to me that the camera pos is so wierd and shit that I can't do it the way I want
-            print("camera y: " + String(describing: -(camera?.position.y)!))
-            print("square y: " + String(describing: squareNodeStack[0]?.position.y))
-            if (squareNodeStack[0]?.position.y)! > -(camera?.position.y)!{
-                print("deleting square")
-                squareNodeStack[0]?.removeFromParent()
-                squareNodeStack.remove(at: 0)
+            if let camera = camera {
+                if (!camera.contains(squareNodeStack[0]!)){
+                    print("deleting square")
+                    squareNodeStack[0]!.removeFromParent()
+                    squareNodeStack.remove(at: 0)
+                }
             }
         }
     }
@@ -102,6 +102,7 @@ class GameScene: SKScene {
     
     func updateCamera() {
         if let camera = camera {
+            print(self.squareNodeStack[self.squareNodeStack.count-1]!.position.y)
             camera.position = CGPoint(x: 0, y: self.squareNodeStack[self.squareNodeStack.count-1]!.position.y)
         }
     }
