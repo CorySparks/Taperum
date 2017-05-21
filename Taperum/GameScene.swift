@@ -57,12 +57,10 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
+        
         if(squareNodeStack.count > 0){
-//          I'm trying to delete the square when it is below the screen
-//          Seems to me that the camera pos is so wierd and shit that I can't do it the way I want
             if let camera = camera {
                 if (!camera.contains(squareNodeStack[0]!)){
-                    print("deleting square")
                     squareNodeStack[0]!.removeFromParent()
                     squareNodeStack.remove(at: 0)
                 }
@@ -72,14 +70,33 @@ class GameScene: SKScene {
     
     func addSquare(){
         var lastSquarePosition: CGPoint
+        var randomPos: [CGFloat]
+        var randomIndex: Int
+        
         if(squareNodeStack.count > 0){
             lastSquarePosition = squareNodeStack[squareNodeStack.count-1]!.position
         }else{
             lastSquarePosition = base2.position
         }
         
-        let randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
-        let randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+        randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
+        if(squareNodeStack.count > 0){
+            if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 150){
+                //taks the width of screen and - 150 then it goes right if close to edge
+                print(">")
+                randomIndex = 0
+            }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 250){
+                //taks the width of screen and - 250 then it goes left if close to edge
+                //idk why the "-" are different
+                print("<")
+                randomIndex = 1
+            }else{
+                randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+            }
+        }else{
+            randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+        }
+        
         
         var square: SKShapeNode!
         
@@ -102,7 +119,6 @@ class GameScene: SKScene {
     
     func updateCamera() {
         if let camera = camera {
-            print(self.squareNodeStack[self.squareNodeStack.count-1]!.position.y)
             camera.position = CGPoint(x: 0, y: self.squareNodeStack[self.squareNodeStack.count-1]!.position.y)
         }
     }
