@@ -19,6 +19,8 @@ class GameScene: SKScene {
     private var LorR : String?
     
     public var baseSize : CGFloat!
+    public var score : Int! = 0
+    public var isGameOver : Bool = false
         
     override func didMove(to view: SKView) {
         
@@ -82,15 +84,16 @@ class GameScene: SKScene {
         
         randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
         if(squareNodeStack.count > 0){
-            if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 150){
-                //taks the width of screen and - 150 then it goes right if close to edge
-                randomIndex = 0
-            }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 250){
-                //taks the width of screen and - 250 then it goes left if close to edge
-                //idk why the "-" are different
-                randomIndex = 1
+            if(isGameOver == false){
+                if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 150){
+                    randomIndex = 0
+                }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 250){
+                    randomIndex = 1
+                }else{
+                    randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+                }
             }else{
-                randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
+                randomIndex = 0
             }
         }else{
             randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
@@ -146,21 +149,24 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             
-            //there is prob a wayyy better way to do this
-            //I counldnt figure it out
-            //this starts on line 110
             if(location.x < 0){
-                if(LorR == "left"){
-                    print("Left")
-                }else{
-                    print("end game")
+                if(LorR != "left"){
+                    isGameOver = true
+                    let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+                    
+                    let gameOver = SKScene(fileNamed: "GameOver")//as! GameOver
+                    //gameOver.score = self.score
+                    self.view?.presentScene(gameOver!, transition: transition)
                 }
             }
             else{
-                if(LorR == "right"){
-                    print("Right")
-                }else{
-                    print("end game")
+                if(LorR != "right"){
+                    isGameOver = true
+                    let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+                    
+                    let gameOver = SKScene(fileNamed: "GameOver")//as! GameOver
+                    //gameOver.score = self.score
+                    self.view?.presentScene(gameOver!, transition: transition)
                 }
             }
         }
