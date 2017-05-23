@@ -154,7 +154,7 @@ class GameScene: SKScene {
                     isGameOver = true
                     let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                     
-                    let gameOver = SKScene(fileNamed: "GameOver")//as! GameOver
+                    let gameOver = SKScene(fileNamed: "GameOverScene")//as! GameOver
                     //gameOver.score = self.score
                     self.view?.presentScene(gameOver!, transition: transition)
                 }
@@ -164,7 +164,7 @@ class GameScene: SKScene {
                     isGameOver = true
                     let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                     
-                    let gameOver = SKScene(fileNamed: "GameOver")//as! GameOver
+                    let gameOver = SKScene(fileNamed: "GameOverScene")//as! GameOver
                     //gameOver.score = self.score
                     self.view?.presentScene(gameOver!, transition: transition)
                 }

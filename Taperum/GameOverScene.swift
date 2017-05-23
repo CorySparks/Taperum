@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameOver: SKScene {
+class GameOverScene: SKScene {
     
     //var score: Int = 0
     
@@ -28,16 +28,19 @@ class GameOver: SKScene {
     //this does not work for some reason
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        if let location = touch?.location(in: self) {
-            let node = self.nodes(at: location)
+        
+        if let location = touch?.location(in: self){
+            let nodeArray = self.nodes(at: location)
             
-            if node[0].name == "newGameBtn" {
-                let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameScene = GameScene(size: self.size)
-                self.view!.presentScene(gameScene, transition: transition)
+            if(nodeArray.first?.name == "newGameBtn"){
+                if let gameScene = GameScene(fileNamed: "GameScene"){
+                    gameScene.scaleMode = .aspectFill
+                    
+                    self.view?.presentScene(gameScene)
+                }
+                
             }
         }
-        
     }
     
 }
