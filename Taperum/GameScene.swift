@@ -16,6 +16,7 @@ class GameScene: SKScene {
     private var platform : SKShapeNode!
     private var squareNodeStack : [SKShapeNode?] = []
     private var squareTimer : Timer!
+    private var LorR : String?
     
     public var baseSize : CGFloat!
         
@@ -83,12 +84,10 @@ class GameScene: SKScene {
         if(squareNodeStack.count > 0){
             if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 150){
                 //taks the width of screen and - 150 then it goes right if close to edge
-                print(">")
                 randomIndex = 0
             }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 250){
                 //taks the width of screen and - 250 then it goes left if close to edge
                 //idk why the "-" are different
-                print("<")
                 randomIndex = 1
             }else{
                 randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
@@ -106,6 +105,12 @@ class GameScene: SKScene {
         if let s = square {
             s.fillColor = .white
             s.strokeColor = .white
+        }
+        
+        if(randomIndex == 0){
+            LorR = "left"
+        }else{
+            LorR = "right"
         }
         
         square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
@@ -137,7 +142,28 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        
+        for touch in touches {
+            let location = touch.location(in: self)
+            
+            //there is prob a wayyy better way to do this
+            //I counldnt figure it out
+            //this starts on line 110
+            if(location.x < 0){
+                if(LorR == "left"){
+                    print("Left")
+                }else{
+                    print("end game")
+                }
+            }
+            else{
+                if(LorR == "right"){
+                    print("Right")
+                }else{
+                    print("end game")
+                }
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
