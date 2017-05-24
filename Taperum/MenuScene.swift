@@ -18,9 +18,12 @@ class MenuScene: SKScene {
     
     var StartBtnNode: SKSpriteNode!
     var CharacterBtnNode: SKSpriteNode!
-    
-    
+    var bestscoreLblNode: SKLabelNode!
+        
     override func didMove(to view: SKView) {
+        
+        let defaults = UserDefaults.standard
+        let bestScore = defaults.string(forKey: "Best")
         
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
@@ -30,6 +33,12 @@ class MenuScene: SKScene {
         self.CharacterBtnNode = self.childNode(withName: "CharacterBtn") as! SKSpriteNode
         
         baseSize = (self.size.width + self.size.height) * 0.05
+        
+        self.bestscoreLblNode = SKLabelNode(fontNamed: "Arial")
+        self.bestscoreLblNode.text = "Best: \(bestScore ?? String(0))"
+        self.bestscoreLblNode.horizontalAlignmentMode = .center
+        self.bestscoreLblNode.position = CGPoint(x: 0, y: -50)
+        addChild(bestscoreLblNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {

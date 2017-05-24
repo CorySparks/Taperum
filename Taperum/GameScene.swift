@@ -99,10 +99,8 @@ class GameScene: SKScene {
         if(squareNodeStack.count > 0){
             if(isGameOver == false){
                 if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 250){
-                    print(">")
                     randomIndex = 0
                 }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 150){
-                    print("<")
                     randomIndex = 1
                 }else{
                     randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))

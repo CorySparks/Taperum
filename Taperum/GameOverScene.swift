@@ -16,10 +16,14 @@ class GameOverScene: SKScene {
     var newGameBtnNode: SKSpriteNode!
     var menuBtnNode: SKSpriteNode!
     
+    var userDefaults = UserDefaults.standard
     
     override func didMove(to view: SKView) {
         self.scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         scoreLabel.text = "Score: \(score)"
+        
+        userDefaults.set(score, forKey: "Best")
+        userDefaults.synchronize()
         
         self.newGameBtnNode = self.childNode(withName: "newGameBtn") as! SKSpriteNode
         self.menuBtnNode = self.childNode(withName: "menuBtn") as! SKSpriteNode
