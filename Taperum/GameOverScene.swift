@@ -22,12 +22,15 @@ class GameOverScene: SKScene {
         self.scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         scoreLabel.text = "Score: \(score)"
         
-        userDefaults.set(score, forKey: "Best")
-        userDefaults.synchronize()
+        let menuScene = MenuScene(fileNamed: "MenuScene")
+        let bestScore = menuScene?.bestScore
+        if(score > (bestScore)!){
+            userDefaults.set(score, forKey: "Best")
+            userDefaults.synchronize()
+        }
         
         self.newGameBtnNode = self.childNode(withName: "newGameBtn") as! SKSpriteNode
         self.menuBtnNode = self.childNode(withName: "menuBtn") as! SKSpriteNode
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
