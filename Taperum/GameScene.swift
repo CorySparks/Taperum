@@ -16,19 +16,32 @@ class GameScene: SKScene {
     private var platform : SKShapeNode!
     private var squareNodeStack : [SKShapeNode?] = []
     private var squareTimer : Timer!
-    private var LorR : String?
+    private var LorR : String!
     
     public var baseSize : CGFloat!
-    public var score : Int! = 0
     public var isGameOver : Bool = false
+    
+    var scoreLblNode: SKLabelNode!
+    var score: Int = 0{
+        didSet{
+            scoreLblNode.text = "\(score)"
+        }
+    }
         
     override func didMove(to view: SKView) {
         
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
+        self.scoreLblNode = self.childNode(withName: "scoreLbl") as? SKLabelNode
         
         baseSize = (self.size.width + self.size.height) * 0.05
+        
+        self.scoreLblNode = SKLabelNode(fontNamed: "Arial")
+        self.scoreLblNode.text = "0"
+        self.scoreLblNode.horizontalAlignmentMode = .center
+        self.scoreLblNode.position = CGPoint(x: 0, y: 300)
+        camera?.addChild(scoreLblNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
@@ -85,9 +98,11 @@ class GameScene: SKScene {
         randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
         if(squareNodeStack.count > 0){
             if(isGameOver == false){
-                if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 150){
+                if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 250){
+                    print(">")
                     randomIndex = 0
-                }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 250){
+                }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 150){
+                    print("<")
                     randomIndex = 1
                 }else{
                     randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
@@ -154,9 +169,11 @@ class GameScene: SKScene {
                     isGameOver = true
                     let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                     
-                    let gameOver = SKScene(fileNamed: "GameOverScene")//as! GameOver
-                    //gameOver.score = self.score
-                    self.view?.presentScene(gameOver!, transition: transition)
+                    let gameOver = GameOverScene(fileNamed: "GameOverScene")!
+                    gameOver.score = self.score
+                    self.view?.presentScene(gameOver, transition: transition)
+                }else{
+                    score += 1
                 }
             }
             else{
@@ -164,9 +181,11 @@ class GameScene: SKScene {
                     isGameOver = true
                     let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                     
-                    let gameOver = SKScene(fileNamed: "GameOverScene")//as! GameOver
-                    //gameOver.score = self.score
-                    self.view?.presentScene(gameOver!, transition: transition)
+                    let gameOver = GameOverScene(fileNamed: "GameOverScene")!
+                    gameOver.score = self.score
+                    self.view?.presentScene(gameOver, transition: transition)
+                }else{
+                    score += 1
                 }
             }
         }

@@ -10,22 +10,22 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
-    //var score: Int = 0
+    var score: Int = 0
     
     var scoreLabel: SKLabelNode!
     var newGameBtnNode: SKSpriteNode!
-    //var menuBtnNode: SKSpriteNode!
+    var menuBtnNode: SKSpriteNode!
     
     
     override func didMove(to view: SKView) {
         self.scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
-        //scoreLabel.text = "\(score)"
+        scoreLabel.text = "Score: \(score)"
         
         self.newGameBtnNode = self.childNode(withName: "newGameBtn") as! SKSpriteNode
+        self.menuBtnNode = self.childNode(withName: "menuBtn") as! SKSpriteNode
         
     }
     
-    //this does not work for some reason
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         
@@ -33,10 +33,21 @@ class GameOverScene: SKScene {
             let nodeArray = self.nodes(at: location)
             
             if(nodeArray.first?.name == "newGameBtn"){
+                let transition = SKTransition.fade(withDuration: 1.0)
                 if let gameScene = GameScene(fileNamed: "GameScene"){
                     gameScene.scaleMode = .aspectFill
                     
-                    self.view?.presentScene(gameScene)
+                    self.view?.presentScene(gameScene, transition: transition)
+                }
+                
+            }
+            
+            if(nodeArray.first?.name == "menuBtn"){
+                let transition = SKTransition.fade(withDuration: 1.0)
+                if let menuScene = MenuScene(fileNamed: "MenuScene"){
+                    menuScene.scaleMode = .aspectFill
+                    
+                    self.view?.presentScene(menuScene, transition: transition)
                 }
                 
             }
