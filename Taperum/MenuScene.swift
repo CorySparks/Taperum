@@ -21,6 +21,8 @@ class MenuScene: SKScene {
     var bestscoreLblNode: SKLabelNode!
     
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
+    var characterArray: [UIColor]! = [.white, .blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown]
+    var characterIndex: Int! = 0
     
     override func didMove(to view: SKView) {
 
@@ -41,22 +43,22 @@ class MenuScene: SKScene {
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
-            platform.fillColor = .white
-            platform.strokeColor = .white
+            platform.fillColor = characterArray[characterIndex]
+            platform.strokeColor = characterArray[characterIndex]
             platform.position.y = (self.size.height / -2)
         }
         
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base1 = self.base1 {
-            base1.fillColor = .white
-            base1.strokeColor = .white
-            base1.position.y =  (platform.position.y) / 2 - baseSize - 10
+            base1.fillColor = characterArray[characterIndex]
+            base1.strokeColor = characterArray[characterIndex]
+            base1.position.y = (platform.position.y) / 2 - baseSize - 10
         }
         
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base2 = self.base2 {
-            base2.fillColor = .white
-            base2.strokeColor = .white
+            base2.fillColor = characterArray[characterIndex]
+            base2.strokeColor = characterArray[characterIndex]
             base2.position.y =  base1.position.y + baseSize
         }
         
@@ -77,7 +79,20 @@ class MenuScene: SKScene {
                     
                     self.view?.presentScene(gameScene)
                 }
-                
+            }
+            
+            if(nodeArray.first?.name == "CharacterBtn"){
+                if(characterIndex != characterArray.count - 1){
+                    characterIndex? += 1
+                }else{
+                    characterIndex = 0
+                }
+                base1.fillColor = characterArray[characterIndex]
+                base1.strokeColor = characterArray[characterIndex]
+                base2.fillColor = characterArray[characterIndex]
+                base2.strokeColor = characterArray[characterIndex]
+                platform.fillColor = characterArray[characterIndex]
+                platform.strokeColor = characterArray[characterIndex]
             }
         }
     }

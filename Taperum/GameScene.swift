@@ -17,6 +17,7 @@ class GameScene: SKScene {
     private var squareNodeStack : [SKShapeNode?] = []
     private var squareTimer : Timer!
     private var LorR : String!
+    private var createTime : Double! = 0.75
     
     public var baseSize : CGFloat!
     public var isGameOver : Bool = false
@@ -27,6 +28,8 @@ class GameScene: SKScene {
             scoreLblNode.text = "\(score)"
         }
     }
+    
+    let menuScene = MenuScene(fileNamed: "MenuScene")!
         
     override func didMove(to view: SKView) {
         
@@ -45,22 +48,22 @@ class GameScene: SKScene {
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
-            platform.fillColor = .white
-            platform.strokeColor = .white
+            platform.fillColor = menuScene.characterArray[menuScene.characterIndex]
+            platform.strokeColor = menuScene.characterArray[menuScene.characterIndex]
             platform.position.y = (self.size.height / -2)
         }
         
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base1 = self.base1 {
-            base1.fillColor = .white
-            base1.strokeColor = .white
+            base1.fillColor = menuScene.characterArray[menuScene.characterIndex]
+            base1.strokeColor = menuScene.characterArray[menuScene.characterIndex]
             base1.position.y =  (platform.position.y) / 2 - baseSize - 10
         }
         
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base2 = self.base2 {
-            base2.fillColor = .white
-            base2.strokeColor = .white
+            base2.fillColor = menuScene.characterArray[menuScene.characterIndex]
+            base2.strokeColor = menuScene.characterArray[menuScene.characterIndex]
             base2.position.y =  base1.position.y + baseSize
         }
 
@@ -68,7 +71,7 @@ class GameScene: SKScene {
         self.addChild(base1)
         self.addChild(base2)
         
-        squareTimer =  Timer.scheduledTimer(timeInterval: 0.75, target: self, selector: #selector(addSquare), userInfo: nil, repeats: true)
+        squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -88,6 +91,10 @@ class GameScene: SKScene {
         var lastSquarePosition: CGPoint
         var randomPos: [CGFloat]
         var randomIndex: Int
+        if(createTime >= 0.40){
+            createTime! -= 0.005
+            print(createTime)
+        }
         
         if(squareNodeStack.count > 0){
             lastSquarePosition = squareNodeStack[squareNodeStack.count-1]!.position
@@ -119,8 +126,8 @@ class GameScene: SKScene {
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let s = square {
-            s.fillColor = .white
-            s.strokeColor = .white
+            s.fillColor = menuScene.characterArray[menuScene.characterIndex]
+            s.strokeColor = menuScene.characterArray[menuScene.characterIndex]
         }
         
         if(randomIndex == 0){
@@ -136,6 +143,8 @@ class GameScene: SKScene {
         if(squareNodeStack.count > 3){
             updateCamera()
         }
+        
+        squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
     }
     
     func updateCamera() {

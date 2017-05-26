@@ -13,6 +13,7 @@ class GameOverScene: SKScene {
     var score: Int = 0
     
     var scoreLabel: SKLabelNode!
+    var bestScoreLabel: SKLabelNode!
     var newGameBtnNode: SKSpriteNode!
     var menuBtnNode: SKSpriteNode!
     
@@ -24,10 +25,15 @@ class GameOverScene: SKScene {
         
         let menuScene = MenuScene(fileNamed: "MenuScene")
         let bestScore = menuScene?.bestScore
+        var newBest = bestScore
         if(score > (bestScore)!){
+            newBest = score
             userDefaults.set(score, forKey: "Best")
             userDefaults.synchronize()
         }
+        
+        self.bestScoreLabel = self.childNode(withName: "bestScoreLabel") as! SKLabelNode
+        bestScoreLabel.text = "Best: \((newBest)!)"
         
         self.newGameBtnNode = self.childNode(withName: "newGameBtn") as! SKSpriteNode
         self.menuBtnNode = self.childNode(withName: "menuBtn") as! SKSpriteNode
