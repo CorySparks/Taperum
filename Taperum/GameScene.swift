@@ -32,7 +32,7 @@ class GameScene: SKScene {
     let menuScene = MenuScene(fileNamed: "MenuScene")!
         
     override func didMove(to view: SKView) {
-        
+        //###start setup###
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
@@ -70,7 +70,9 @@ class GameScene: SKScene {
         self.addChild(platform)
         self.addChild(base1)
         self.addChild(base2)
+        //###end setup###
         
+        //timer to make the squares, to make the creation time fast over time we make the repeat false
         squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
     }
     
@@ -91,25 +93,34 @@ class GameScene: SKScene {
         var lastSquarePosition: CGPoint
         var randomPos: [CGFloat]
         var randomIndex: Int
+        //changing square creation speed over time
         if(createTime >= 0.40){
             createTime! -= 0.005
             print(createTime)
         }
         
+        //starting the square in the right spot
         if(squareNodeStack.count > 0){
             lastSquarePosition = squareNodeStack[squareNodeStack.count-1]!.position
         }else{
             lastSquarePosition = base2.position
         }
         
+        //two random posistions, left or right
         randomPos = [lastSquarePosition.x - baseSize, lastSquarePosition.x + baseSize]
         if(squareNodeStack.count > 0){
+            //had to add this or else it would try and - 1 from array and crash the games if the player loses
             if(isGameOver == false){
+                //detects if the square is getting close to the right side of screen
                 if(squareNodeStack[squareNodeStack.count-1]!.position.x > (view?.frame.maxX)! - 250){
+                    //makes square go left
                     randomIndex = 0
+                //detects if the square is getting close to the left side of screen
                 }else if(squareNodeStack[squareNodeStack.count-1]!.position.x < (view?.frame.minX)! - 150){
+                    //makes square go right
                     randomIndex = 1
                 }else{
+                    //grabs random pos
                     randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
                 }
             }else{
@@ -126,10 +137,13 @@ class GameScene: SKScene {
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let s = square {
+            //still working on this, trying to make it to what the player choses the character and it will be the same,
+            //as of right now it just keeps grabbing [0] because when it moves scenes characterIndex is set back to 0
             s.fillColor = menuScene.characterArray[menuScene.characterIndex]
             s.strokeColor = menuScene.characterArray[menuScene.characterIndex]
         }
         
+        //so we can add points easily and tell what side the square was on to determine the touch
         if(randomIndex == 0){
             LorR = "left"
         }else{
@@ -143,7 +157,7 @@ class GameScene: SKScene {
         if(squareNodeStack.count > 3){
             updateCamera()
         }
-        
+        //so that it calls itself and increases createTime over time
         squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
     }
     
@@ -171,7 +185,9 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             
+            //detect left side of screen touch
             if(location.x < 0){
+                //if not the left side of screen call game over scene
                 if(LorR != "left"){
                     isGameOver = true
                     let transition = SKTransition.flipHorizontal(withDuration: 0.5)
@@ -180,6 +196,7 @@ class GameScene: SKScene {
                     gameOver.score = self.score
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
+                    //if you tapped the correct side ads a point
                     score += 1
                 }
             }

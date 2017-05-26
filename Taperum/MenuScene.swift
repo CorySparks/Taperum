@@ -9,6 +9,7 @@
 import SpriteKit
 
 class MenuScene: SKScene {
+    //This scene is just the start button and the character button
     
     private var base1 : SKShapeNode!
     private var base2 : SKShapeNode!
