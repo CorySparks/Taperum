@@ -21,11 +21,15 @@ class MenuScene: SKScene {
     var CharacterBtnNode: SKSpriteNode!
     var bestscoreLblNode: SKLabelNode!
     
+    var userDefaults = UserDefaults.standard
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
+    var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
+    
     var characterArray: [UIColor]! = [.white, .blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown]
     var characterIndex: Int! = 0
     
     override func didMove(to view: SKView) {
+        characterIndex = characterChoice
 
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
@@ -77,6 +81,7 @@ class MenuScene: SKScene {
             if(nodeArray.first?.name == "StartBtn"){
                 if let gameScene = GameScene(fileNamed: "GameScene"){
                     gameScene.scaleMode = .aspectFill
+                    gameScene.characterIndex = self.characterIndex
                     
                     self.view?.presentScene(gameScene)
                 }
@@ -88,6 +93,9 @@ class MenuScene: SKScene {
                 }else{
                     characterIndex = 0
                 }
+                userDefaults.set(characterIndex, forKey: "characterChoice")
+                userDefaults.synchronize()
+                
                 base1.fillColor = characterArray[characterIndex]
                 base1.strokeColor = characterArray[characterIndex]
                 base2.fillColor = characterArray[characterIndex]

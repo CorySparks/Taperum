@@ -22,6 +22,7 @@ class GameScene: SKScene {
     public var baseSize : CGFloat!
     public var isGameOver : Bool = false
     
+    var characterIndex : Int!
     var scoreLblNode: SKLabelNode!
     var score: Int = 0{
         didSet{
@@ -48,22 +49,22 @@ class GameScene: SKScene {
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
-            platform.fillColor = menuScene.characterArray[menuScene.characterIndex]
-            platform.strokeColor = menuScene.characterArray[menuScene.characterIndex]
+            platform.fillColor = menuScene.characterArray[characterIndex]
+            platform.strokeColor = menuScene.characterArray[characterIndex]
             platform.position.y = (self.size.height / -2)
         }
         
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base1 = self.base1 {
-            base1.fillColor = menuScene.characterArray[menuScene.characterIndex]
-            base1.strokeColor = menuScene.characterArray[menuScene.characterIndex]
+            base1.fillColor = menuScene.characterArray[characterIndex]
+            base1.strokeColor = menuScene.characterArray[characterIndex]
             base1.position.y =  (platform.position.y) / 2 - baseSize - 10
         }
         
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let base2 = self.base2 {
-            base2.fillColor = menuScene.characterArray[menuScene.characterIndex]
-            base2.strokeColor = menuScene.characterArray[menuScene.characterIndex]
+            base2.fillColor = menuScene.characterArray[characterIndex]
+            base2.strokeColor = menuScene.characterArray[characterIndex]
             base2.position.y =  base1.position.y + baseSize
         }
 
@@ -137,10 +138,9 @@ class GameScene: SKScene {
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let s = square {
-            //still working on this, trying to make it to what the player choses the character and it will be the same,
-            //as of right now it just keeps grabbing [0] because when it moves scenes characterIndex is set back to 0
-            s.fillColor = menuScene.characterArray[menuScene.characterIndex]
-            s.strokeColor = menuScene.characterArray[menuScene.characterIndex]
+            //grabs the color the character has picked in the menuScene
+            s.fillColor = menuScene.characterArray[characterIndex]
+            s.strokeColor = menuScene.characterArray[characterIndex]
         }
         
         //so we can add points easily and tell what side the square was on to determine the touch
