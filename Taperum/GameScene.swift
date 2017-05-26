@@ -59,6 +59,9 @@ class GameScene: SKScene {
             base1.fillColor = menuScene.characterArray[characterIndex]
             base1.strokeColor = menuScene.characterArray[characterIndex]
             base1.position.y =  (platform.position.y) / 2 - baseSize - 10
+            //refrence to when i want to add textures, fyi fill color needs to be set to .white so the image is visable
+            //or else the images doesnt show up
+            //base1.fillTexture = SKTexture(image: #imageLiteral(resourceName: "random"))
         }
         
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
@@ -194,6 +197,7 @@ class GameScene: SKScene {
                     
                     let gameOver = GameOverScene(fileNamed: "GameOverScene")!
                     gameOver.score = self.score
+                    gameOver.characterIndex = self.characterIndex
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
                     //if you tapped the correct side ads a point
@@ -207,6 +211,7 @@ class GameScene: SKScene {
                     
                     let gameOver = GameOverScene(fileNamed: "GameOverScene")!
                     gameOver.score = self.score
+                    gameOver.characterIndex = self.characterIndex
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
                     score += 1

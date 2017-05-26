@@ -11,6 +11,7 @@ import SpriteKit
 class GameOverScene: SKScene {
     
     var score: Int = 0
+    var characterIndex: Int!
     
     var scoreLabel: SKLabelNode!
     var bestScoreLabel: SKLabelNode!
@@ -49,6 +50,7 @@ class GameOverScene: SKScene {
                 let transition = SKTransition.fade(withDuration: 1.0)
                 if let gameScene = GameScene(fileNamed: "GameScene"){
                     gameScene.scaleMode = .aspectFill
+                    gameScene.characterIndex = self.characterIndex
                     
                     self.view?.presentScene(gameScene, transition: transition)
                 }
