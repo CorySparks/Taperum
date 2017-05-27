@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B568F421ED99B47001B7961 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F411ED99B47001B7961 /* MyParticle.sks */; };
 		8B82A5AC1EC4C870001C88D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */; };
 		8B82A5AE1EC4C870001C88D3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AD1EC4C870001C88D3 /* GameScene.sks */; };
 		8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AF1EC4C870001C88D3 /* Actions.sks */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B568F411ED99B47001B7961 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
 		8B82A5A81EC4C870001C88D3 /* Taperum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taperum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B82A5AD1EC4C870001C88D3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				8B82A5B81EC4C870001C88D3 /* Assets.xcassets */,
 				8B82A5BA1EC4C870001C88D3 /* LaunchScreen.storyboard */,
 				8B82A5BD1EC4C870001C88D3 /* Info.plist */,
+				8B568F411ED99B47001B7961 /* MyParticle.sks */,
 			);
 			path = Taperum;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				8B82A5B91EC4C870001C88D3 /* Assets.xcassets in Resources */,
 				8B82A5BC1EC4C870001C88D3 /* LaunchScreen.storyboard in Resources */,
 				8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */,
+				8B568F421ED99B47001B7961 /* MyParticle.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

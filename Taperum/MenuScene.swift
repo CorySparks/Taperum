@@ -57,7 +57,7 @@ class MenuScene: SKScene {
         if let base1 = self.base1 {
             base1.fillColor = characterArray[characterIndex]
             base1.strokeColor = characterArray[characterIndex]
-            base1.position.y = (platform.position.y) / 2 - baseSize - 10
+            base1.position.y = (platform.position.y) / 2 - baseSize - 6
         }
         
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))

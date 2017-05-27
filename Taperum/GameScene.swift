@@ -100,7 +100,6 @@ class GameScene: SKScene {
         //changing square creation speed over time
         if(createTime >= 0.40){
             createTime! -= 0.005
-            print(createTime)
         }
         
         //starting the square in the right spot
@@ -136,6 +135,7 @@ class GameScene: SKScene {
         
         
         var square: SKShapeNode!
+        var coinSquare: SKShapeNode!
         
         square =  self.childNode(withName: "Square") as? SKShapeNode
         
@@ -146,6 +146,16 @@ class GameScene: SKScene {
             s.strokeColor = menuScene.characterArray[characterIndex]
         }
         
+        coinSquare =  self.childNode(withName: "coinSquare") as? SKShapeNode
+        
+        coinSquare = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
+        if let cs = coinSquare {
+            //grabs the color the character has picked in the menuScene
+            cs.fillColor = .white
+            cs.strokeColor = menuScene.characterArray[characterIndex]
+            cs.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
+        }
+        
         //so we can add points easily and tell what side the square was on to determine the touch
         if(randomIndex == 0){
             LorR = "left"
@@ -153,13 +163,32 @@ class GameScene: SKScene {
             LorR = "right"
         }
         
-        square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
+        if(arc4random_uniform(100) > 10){
+            square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
+            self.addChild(square!)
+            self.squareNodeStack.append(square)
+        }else{
+            coinSquare.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
+            self.addChild(coinSquare!)
+            self.squareNodeStack.append(coinSquare)
+        }
         
-        self.addChild(square!)
-        self.squareNodeStack.append(square)
         if(squareNodeStack.count > 3){
             updateCamera()
         }
+        
+        /*idk how i like this
+        if let spark = SKEmitterNode(fileNamed: "MyParticle.sks") {
+            spark.position = square.position
+            spark.particleLifetime = 1.0
+            self.run(SKAction.wait(forDuration: 0.80)){
+                spark.removeFromParent()
+            }
+            spark.particleScale = 0.3
+            addChild(spark)
+        }
+        */
+        
         //so that it calls itself and increases createTime over time
         squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
     }
@@ -200,7 +229,7 @@ class GameScene: SKScene {
                     gameOver.characterIndex = self.characterIndex
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
-                    //if you tapped the correct side ads a point
+                    //if you tapped the correct side adds a point
                     score += 1
                 }
             }
