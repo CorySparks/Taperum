@@ -16,36 +16,72 @@ class GameScene: SKScene {
     private var platform : SKShapeNode!
     private var squareNodeStack : [SKShapeNode?] = []
     private var squareTimer : Timer!
+    private var square: SKShapeNode!
+    private var coinSquare: SKShapeNode!
     private var LorR : String!
     private var createTime : Double! = 0.75
     
     public var baseSize : CGFloat!
     public var isGameOver : Bool = false
+    public var wasGold: Bool = false
     
+    var userDefaults = UserDefaults.standard
     var characterIndex : Int!
     var scoreLblNode: SKLabelNode!
+    var goldLblNode: SKLabelNode!
+    var coinImg: SKShapeNode!
+    
     var score: Int = 0{
         didSet{
-            scoreLblNode.text = "\(score)"
+            scoreLblNode.text = "Score: \(score)"
         }
     }
+    var gold: Int = 0{
+        didSet{
+            goldLblNode.text = ": \(gold)"
+        }
+    }
+    
+    var totalGold: Int! = 0
     
     let menuScene = MenuScene(fileNamed: "MenuScene")!
         
     override func didMove(to view: SKView) {
+        userDefaults.set(totalGold, forKey: "totalGold")
+        userDefaults.synchronize()
+        
+        print("gameScene totalgold : \(totalGold)")
         //###start setup###
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
         self.scoreLblNode = self.childNode(withName: "scoreLbl") as? SKLabelNode
+        self.goldLblNode = self.childNode(withName: "goldCoins") as? SKLabelNode
+        self.coinImg = self.childNode(withName: "coingImg") as? SKShapeNode
         
         baseSize = (self.size.width + self.size.height) * 0.05
         
         self.scoreLblNode = SKLabelNode(fontNamed: "Arial")
-        self.scoreLblNode.text = "0"
+        self.scoreLblNode.text = "Score: 0"
         self.scoreLblNode.horizontalAlignmentMode = .center
-        self.scoreLblNode.position = CGPoint(x: 0, y: 300)
+        self.scoreLblNode.position = CGPoint(x: -135, y: 300)
         camera?.addChild(scoreLblNode)
+        
+        self.goldLblNode = SKLabelNode(fontNamed: "Arial")
+        self.goldLblNode.text = ": 0"
+        self.goldLblNode.horizontalAlignmentMode = .center
+        self.goldLblNode.position = CGPoint(x: 180, y: 300)
+        
+        self.coinImg = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
+        if let coinImg = self.coinImg {
+            coinImg.fillColor = .white
+            coinImg.strokeColor = .clear
+            coinImg.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
+            coinImg.position = CGPoint(x: 145, y: 310)
+        }
+        
+        camera?.addChild(coinImg)
+        camera?.addChild(goldLblNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
@@ -133,10 +169,6 @@ class GameScene: SKScene {
             randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
         }
         
-        
-        var square: SKShapeNode!
-        var coinSquare: SKShapeNode!
-        
         square =  self.childNode(withName: "Square") as? SKShapeNode
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
@@ -167,10 +199,12 @@ class GameScene: SKScene {
             square.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
             self.addChild(square!)
             self.squareNodeStack.append(square)
+            wasGold = false
         }else{
             coinSquare.position = CGPoint(x: randomPos[randomIndex], y: lastSquarePosition.y + baseSize)
             self.addChild(coinSquare!)
             self.squareNodeStack.append(coinSquare)
+            wasGold = true
         }
         
         if(squareNodeStack.count > 3){
@@ -227,10 +261,21 @@ class GameScene: SKScene {
                     let gameOver = GameOverScene(fileNamed: "GameOverScene")!
                     gameOver.score = self.score
                     gameOver.characterIndex = self.characterIndex
+                    gameOver.gold = self.gold
+                    let newTotal = totalGold + gold
+                    userDefaults.set(newTotal, forKey: "totalGold")
+                    userDefaults.synchronize()
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
                     //if you tapped the correct side adds a point
-                    score += 1
+                    if(wasGold){
+                        score += 1
+                        gold += 1
+                        self.run(SKAction.playSoundFileNamed("coinGrabSound.wav", waitForCompletion: false))
+                    }else{
+                        self.run(SKAction.playSoundFileNamed("tapSound.wav", waitForCompletion: false))
+                        score += 1
+                    }
                 }
             }
             else{
@@ -241,9 +286,20 @@ class GameScene: SKScene {
                     let gameOver = GameOverScene(fileNamed: "GameOverScene")!
                     gameOver.score = self.score
                     gameOver.characterIndex = self.characterIndex
+                    gameOver.gold = self.gold
+                    let newTotal = totalGold + gold
+                    userDefaults.set(newTotal, forKey: "totalGold")
+                    userDefaults.synchronize()
                     self.view?.presentScene(gameOver, transition: transition)
                 }else{
-                    score += 1
+                    if(wasGold){
+                        score += 1
+                        gold += 1
+                        self.run(SKAction.playSoundFileNamed("coinGrabSound.wav", waitForCompletion: false))
+                    }else{
+                        self.run(SKAction.playSoundFileNamed("tapSound.wav", waitForCompletion: false))
+                        score += 1
+                    }
                 }
             }
         }

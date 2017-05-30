@@ -20,6 +20,8 @@ class MenuScene: SKScene {
     var StartBtnNode: SKSpriteNode!
     var CharacterBtnNode: SKSpriteNode!
     var bestscoreLblNode: SKLabelNode!
+    var totalGoldLabelNode: SKLabelNode!
+    var coinImg: SKShapeNode!
     
     var userDefaults = UserDefaults.standard
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
@@ -27,6 +29,7 @@ class MenuScene: SKScene {
     
     var characterArray: [UIColor]! = [.white, .blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown]
     var characterIndex: Int! = 0
+    var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold")
     
     override func didMove(to view: SKView) {
         characterIndex = characterChoice
@@ -45,6 +48,21 @@ class MenuScene: SKScene {
         self.bestscoreLblNode.horizontalAlignmentMode = .center
         self.bestscoreLblNode.position = CGPoint(x: 0, y: -50)
         addChild(bestscoreLblNode)
+        
+        self.coinImg = SKShapeNode.init(rectOf: CGSize.init(width: 60, height: 60))
+        if let coinImg = self.coinImg {
+            coinImg.fillColor = .white
+            coinImg.strokeColor = .clear
+            coinImg.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
+            coinImg.position = CGPoint(x: -30, y: -90)
+        }
+        
+        self.totalGoldLabelNode = SKLabelNode(fontNamed: "Arial")
+        self.totalGoldLabelNode.text = ": \(String(totalGold))"
+        self.totalGoldLabelNode.horizontalAlignmentMode = .center
+        self.totalGoldLabelNode.position = CGPoint(x: 15, y: -100)
+        addChild(coinImg)
+        addChild(totalGoldLabelNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         if let platform = self.platform {
@@ -82,6 +100,7 @@ class MenuScene: SKScene {
                 if let gameScene = GameScene(fileNamed: "GameScene"){
                     gameScene.scaleMode = .aspectFill
                     gameScene.characterIndex = self.characterIndex
+                    gameScene.totalGold = self.totalGold
                     
                     self.view?.presentScene(gameScene)
                 }

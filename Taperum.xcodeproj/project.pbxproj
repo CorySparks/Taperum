@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8B568F421ED99B47001B7961 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F411ED99B47001B7961 /* MyParticle.sks */; };
+		8B568F441EDB7DA6001B7961 /* coinGrabSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */; };
+		8B568F481EDB81E6001B7961 /* tapSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F471EDB81E6001B7961 /* tapSound.wav */; };
+		8B568F4A1EDB81F0001B7961 /* playSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F491EDB81F0001B7961 /* playSound.wav */; };
 		8B82A5AC1EC4C870001C88D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */; };
 		8B82A5AE1EC4C870001C88D3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AD1EC4C870001C88D3 /* GameScene.sks */; };
 		8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AF1EC4C870001C88D3 /* Actions.sks */; };
@@ -43,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		8B568F411ED99B47001B7961 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
+		8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coinGrabSound.wav; sourceTree = "<group>"; };
+		8B568F471EDB81E6001B7961 /* tapSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tapSound.wav; sourceTree = "<group>"; };
+		8B568F491EDB81F0001B7961 /* playSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = playSound.wav; sourceTree = "<group>"; };
 		8B82A5A81EC4C870001C88D3 /* Taperum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taperum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B82A5AD1EC4C870001C88D3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -123,6 +129,9 @@
 				8B82A5B11EC4C870001C88D3 /* GameScene.swift */,
 				8B82A5B31EC4C870001C88D3 /* GameViewController.swift */,
 				8B82A5B51EC4C870001C88D3 /* Main.storyboard */,
+				8B568F491EDB81F0001B7961 /* playSound.wav */,
+				8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */,
+				8B568F471EDB81E6001B7961 /* tapSound.wav */,
 				8B82A5B81EC4C870001C88D3 /* Assets.xcassets */,
 				8B82A5BA1EC4C870001C88D3 /* LaunchScreen.storyboard */,
 				8B82A5BD1EC4C870001C88D3 /* Info.plist */,
@@ -259,11 +268,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B568F481EDB81E6001B7961 /* tapSound.wav in Resources */,
 				8B82A5B71EC4C870001C88D3 /* Main.storyboard in Resources */,
 				8B847AE91ED4992500682AB0 /* MenuScene.sks in Resources */,
+				8B568F4A1EDB81F0001B7961 /* playSound.wav in Resources */,
 				8B82A5AE1EC4C870001C88D3 /* GameScene.sks in Resources */,
 				8BA9ED301ED4C67A008B2DC0 /* GameOverScene.sks in Resources */,
 				8B82A5B91EC4C870001C88D3 /* Assets.xcassets in Resources */,
+				8B568F441EDB7DA6001B7961 /* coinGrabSound.wav in Resources */,
 				8B82A5BC1EC4C870001C88D3 /* LaunchScreen.storyboard in Resources */,
 				8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */,
 				8B568F421ED99B47001B7961 /* MyParticle.sks in Resources */,
