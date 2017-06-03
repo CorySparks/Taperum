@@ -113,7 +113,9 @@ class GameScene: SKScene {
         //###end setup###
         
         //timer to make the squares, to make the creation time fast over time we make the repeat false
+        
         squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
+
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -130,6 +132,9 @@ class GameScene: SKScene {
     }
     
     func addSquare(){
+        guard !isGameOver else {
+            return
+        }
         var lastSquarePosition: CGPoint
         var randomPos: [CGFloat]
         var randomIndex: Int
@@ -224,7 +229,9 @@ class GameScene: SKScene {
         */
         
         //so that it calls itself and increases createTime over time
-        squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
+        if(!isGameOver){
+            squareTimer = Timer.scheduledTimer(timeInterval: createTime, target: self, selector: #selector(addSquare), userInfo: nil, repeats: false)
+        }
     }
     
     func updateCamera() {
