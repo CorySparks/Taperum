@@ -20,6 +20,7 @@ class GameScene: SKScene {
     private var coinSquare: SKShapeNode!
     private var LorR : String!
     private var createTime : Double! = 0.75
+    private var doesNeedTap = false
     
     public var baseSize : CGFloat!
     public var isGameOver : Bool = false
@@ -132,6 +133,10 @@ class GameScene: SKScene {
     }
     
     func addSquare(){
+        guard !doesNeedTap else {
+            gameOver()
+            return
+        }
         guard !isGameOver else {
             return
         }
@@ -211,7 +216,7 @@ class GameScene: SKScene {
             self.squareNodeStack.append(coinSquare)
             wasGold = true
         }
-        
+        doesNeedTap = true
         if(squareNodeStack.count > 3){
             updateCamera()
         }
@@ -253,6 +258,37 @@ class GameScene: SKScene {
         
     }
     
+    private func gameOver(){
+        isGameOver = true
+        let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+        
+        let gameOver = GameOverScene(fileNamed: "GameOverScene")!
+        gameOver.score = self.score
+        gameOver.characterIndex = self.characterIndex
+        gameOver.gold = self.gold
+        let newTotal = totalGold + gold
+        userDefaults.set(newTotal, forKey: "totalGold")
+        userDefaults.synchronize()
+        self.view?.presentScene(gameOver, transition: transition)
+    }
+    
+    private func processGoodTap(){
+        guard doesNeedTap else {
+            // expert mode this can call end game
+            return
+        }
+        if(wasGold){
+            wasGold = false
+            score += 1
+            gold += 1
+            self.run(SKAction.playSoundFileNamed("coinGrabSound.wav", waitForCompletion: false))
+        }else{
+            self.run(SKAction.playSoundFileNamed("tapSound.wav", waitForCompletion: false))
+            score += 1
+        }
+        doesNeedTap = false
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
@@ -262,51 +298,17 @@ class GameScene: SKScene {
             if(location.x < 0){
                 //if not the left side of screen call game over scene
                 if(LorR != "left"){
-                    isGameOver = true
-                    let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-                    
-                    let gameOver = GameOverScene(fileNamed: "GameOverScene")!
-                    gameOver.score = self.score
-                    gameOver.characterIndex = self.characterIndex
-                    gameOver.gold = self.gold
-                    let newTotal = totalGold + gold
-                    userDefaults.set(newTotal, forKey: "totalGold")
-                    userDefaults.synchronize()
-                    self.view?.presentScene(gameOver, transition: transition)
+                    gameOver()
                 }else{
                     //if you tapped the correct side adds a point
-                    if(wasGold){
-                        score += 1
-                        gold += 1
-                        self.run(SKAction.playSoundFileNamed("coinGrabSound.wav", waitForCompletion: false))
-                    }else{
-                        self.run(SKAction.playSoundFileNamed("tapSound.wav", waitForCompletion: false))
-                        score += 1
-                    }
+                    processGoodTap()
                 }
             }
             else{
                 if(LorR != "right"){
-                    isGameOver = true
-                    let transition = SKTransition.flipHorizontal(withDuration: 0.5)
-                    
-                    let gameOver = GameOverScene(fileNamed: "GameOverScene")!
-                    gameOver.score = self.score
-                    gameOver.characterIndex = self.characterIndex
-                    gameOver.gold = self.gold
-                    let newTotal = totalGold + gold
-                    userDefaults.set(newTotal, forKey: "totalGold")
-                    userDefaults.synchronize()
-                    self.view?.presentScene(gameOver, transition: transition)
+                    gameOver()
                 }else{
-                    if(wasGold){
-                        score += 1
-                        gold += 1
-                        self.run(SKAction.playSoundFileNamed("coinGrabSound.wav", waitForCompletion: false))
-                    }else{
-                        self.run(SKAction.playSoundFileNamed("tapSound.wav", waitForCompletion: false))
-                        score += 1
-                    }
+                    processGoodTap()
                 }
             }
         }
