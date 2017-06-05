@@ -85,28 +85,44 @@ class GameScene: SKScene {
         camera?.addChild(goldLblNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
-        if let platform = self.platform {
-            platform.fillColor = menuScene.characterArray[characterIndex]
-            platform.strokeColor = menuScene.characterArray[characterIndex]
-            platform.position.y = (self.size.height / -2)
-        }
-        
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
-        if let base1 = self.base1 {
-            base1.fillColor = menuScene.characterArray[characterIndex]
-            base1.strokeColor = menuScene.characterArray[characterIndex]
-            base1.position.y =  (platform.position.y) / 2 - baseSize - 10
-            //refrence to when i want to add textures, fyi fill color needs to be set to .white so the image is visable
-            //or else the images doesnt show up
-            //base1.fillTexture = SKTexture(image: #imageLiteral(resourceName: "random"))
+        self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
+        
+        switch menuScene.characterArray[characterIndex!].design{
+        case is UIColor:
+            platform.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+            platform.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+            platform.fillTexture = nil
+            
+            base1.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+            base1.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+            base1.fillTexture = nil
+            
+            base2.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+            base2.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+            base2.fillTexture = nil
+            break
+        case is SKTexture:
+            platform.fillColor = .white
+            platform.strokeColor = .clear
+            platform.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+            
+            base1.fillColor = .white
+            base1.strokeColor = .clear
+            base1.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+            
+            base2.fillColor = .white
+            base2.strokeColor = .clear
+            base2.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+            break
+        default:
+            // hmm
+            break
         }
         
-        self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
-        if let base2 = self.base2 {
-            base2.fillColor = menuScene.characterArray[characterIndex]
-            base2.strokeColor = menuScene.characterArray[characterIndex]
-            base2.position.y =  base1.position.y + baseSize
-        }
+        platform.position.y = (self.size.height / -2)
+        base1.position.y = (platform.position.y) / 2 - baseSize - 6
+        base2.position.y =  base1.position.y + baseSize
 
         self.addChild(platform)
         self.addChild(base1)
@@ -179,22 +195,45 @@ class GameScene: SKScene {
             randomIndex = Int(arc4random_uniform(UInt32(randomPos.count)))
         }
         
-        square =  self.childNode(withName: "Square") as? SKShapeNode
+        square = self.childNode(withName: "Square") as? SKShapeNode
         
         square = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let s = square {
             //grabs the color the character has picked in the menuScene
-            s.fillColor = menuScene.characterArray[characterIndex]
-            s.strokeColor = menuScene.characterArray[characterIndex]
+            switch menuScene.characterArray[characterIndex!].design{
+            case is UIColor:
+                s.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+                s.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+                s.fillTexture = nil
+                break
+            case is SKTexture:
+                s.fillColor = .white
+                s.strokeColor = .clear
+                s.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+                break
+            default:
+                // hmm
+                break
+            }
         }
         
-        coinSquare =  self.childNode(withName: "coinSquare") as? SKShapeNode
+        coinSquare = self.childNode(withName: "coinSquare") as? SKShapeNode
         
         coinSquare = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         if let cs = coinSquare {
             //grabs the color the character has picked in the menuScene
+            switch menuScene.characterArray[characterIndex!].design{
+            case is UIColor:
+                cs.strokeColor = menuScene.characterArray[characterIndex!].design as! UIColor
+                break
+            case is SKTexture:
+                cs.strokeColor = .white
+                break
+            default:
+                // hmm
+                break
+            }
             cs.fillColor = .white
-            cs.strokeColor = menuScene.characterArray[characterIndex]
             cs.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
         }
         
@@ -221,7 +260,7 @@ class GameScene: SKScene {
             updateCamera()
         }
         
-        /*idk how i like this
+        /*
         if let spark = SKEmitterNode(fileNamed: "MyParticle.sks") {
             spark.position = square.position
             spark.particleLifetime = 1.0
@@ -259,6 +298,9 @@ class GameScene: SKScene {
     }
     
     private func gameOver(){
+        guard !isGameOver else {
+            return
+        }
         isGameOver = true
         let transition = SKTransition.flipHorizontal(withDuration: 0.5)
         
@@ -312,18 +354,6 @@ class GameScene: SKScene {
                 }
             }
         }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
 }

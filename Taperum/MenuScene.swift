@@ -8,6 +8,12 @@
 
 import SpriteKit
 
+struct retardedSquare {
+    var design: AnyObject
+    var doesCost: Bool
+    var coins: Int?
+}
+
 class MenuScene: SKScene {
     //This scene is just the start button and the character button
     
@@ -26,14 +32,14 @@ class MenuScene: SKScene {
     var userDefaults = UserDefaults.standard
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
+    //.blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown
+    var characterArray: [retardedSquare]! = [retardedSquare(design: UIColor.white, doesCost: false, coins:nil), retardedSquare(design: UIColor.blue, doesCost: false, coins:nil), retardedSquare(design: UIColor.green, doesCost: false, coins:nil), retardedSquare(design: UIColor.gray, doesCost: false, coins:nil), retardedSquare(design: UIColor.cyan, doesCost: false, coins:nil), retardedSquare(design: UIColor.yellow, doesCost: false, coins:nil), retardedSquare(design: UIColor.red, doesCost: false, coins:nil) ,retardedSquare(design: UIColor.purple, doesCost: false, coins:nil), retardedSquare(design: UIColor.orange, doesCost: false, coins:nil), retardedSquare(design: UIColor.brown, doesCost: false, coins:nil), retardedSquare(design: SKTexture(image: #imageLiteral(resourceName: "random")), doesCost: true, coins: 50)]
     
-    var characterArray: [UIColor]! = [.white, .blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown]
     var characterIndex: Int! = 0
     var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold")
     
     override func didMove(to view: SKView) {
         characterIndex = characterChoice
-
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
@@ -65,25 +71,44 @@ class MenuScene: SKScene {
         addChild(totalGoldLabelNode)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
-        if let platform = self.platform {
-            platform.fillColor = characterArray[characterIndex]
-            platform.strokeColor = characterArray[characterIndex]
-            platform.position.y = (self.size.height / -2)
-        }
-        
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
-        if let base1 = self.base1 {
-            base1.fillColor = characterArray[characterIndex]
-            base1.strokeColor = characterArray[characterIndex]
-            base1.position.y = (platform.position.y) / 2 - baseSize - 6
+        self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
+        
+        switch characterArray[characterIndex!].design{
+        case is UIColor:
+            platform.fillColor = characterArray[characterIndex].design as! UIColor
+            platform.strokeColor = characterArray[characterIndex].design as! UIColor
+            platform.fillTexture = nil
+            
+            base1.fillColor = characterArray[characterIndex].design as! UIColor
+            base1.strokeColor = characterArray[characterIndex].design as! UIColor
+            base1.fillTexture = nil
+            
+            base2.fillColor = characterArray[characterIndex].design as! UIColor
+            base2.strokeColor = characterArray[characterIndex].design as! UIColor
+            base2.fillTexture = nil
+            break
+        case is SKTexture:
+            platform.fillColor = .white
+            platform.strokeColor = .clear
+            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
+            
+            base1.fillColor = .white
+            base1.strokeColor = .clear
+            base1.fillTexture = characterArray[characterIndex].design as? SKTexture
+            
+            base2.fillColor = .white
+            base2.strokeColor = .clear
+            base2.fillTexture = characterArray[characterIndex].design as? SKTexture
+            break
+        default:
+            // hmm
+            break
         }
         
-        self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
-        if let base2 = self.base2 {
-            base2.fillColor = characterArray[characterIndex]
-            base2.strokeColor = characterArray[characterIndex]
-            base2.position.y =  base1.position.y + baseSize
-        }
+        platform.position.y = (self.size.height / -2)
+        base1.position.y = (platform.position.y) / 2 - baseSize - 6
+        base2.position.y =  base1.position.y + baseSize
         
         self.addChild(platform)
         self.addChild(base1)
@@ -115,12 +140,41 @@ class MenuScene: SKScene {
                 userDefaults.set(characterIndex, forKey: "characterChoice")
                 userDefaults.synchronize()
                 
-                base1.fillColor = characterArray[characterIndex]
-                base1.strokeColor = characterArray[characterIndex]
-                base2.fillColor = characterArray[characterIndex]
-                base2.strokeColor = characterArray[characterIndex]
-                platform.fillColor = characterArray[characterIndex]
-                platform.strokeColor = characterArray[characterIndex]
+                if (characterArray[characterIndex].doesCost){
+                    //...
+                }
+                
+                switch characterArray[characterIndex!].design{
+                case is UIColor:
+                    platform.fillColor = characterArray[characterIndex].design as! UIColor
+                    platform.strokeColor = characterArray[characterIndex].design as! UIColor
+                    platform.fillTexture = nil
+                    
+                    base1.fillColor = characterArray[characterIndex].design as! UIColor
+                    base1.strokeColor = characterArray[characterIndex].design as! UIColor
+                    base1.fillTexture = nil
+                    
+                    base2.fillColor = characterArray[characterIndex].design as! UIColor
+                    base2.strokeColor = characterArray[characterIndex].design as! UIColor
+                    base2.fillTexture = nil
+                    break
+                case is SKTexture:
+                    platform.fillColor = .white
+                    platform.strokeColor = .clear
+                    platform.fillTexture = characterArray[characterIndex].design as? SKTexture
+                    
+                    base1.fillColor = .white
+                    base1.strokeColor = .clear
+                    base1.fillTexture = characterArray[characterIndex].design as? SKTexture
+                    
+                    base2.fillColor = .white
+                    base2.strokeColor = .clear
+                    base2.fillTexture = characterArray[characterIndex].design as? SKTexture
+                    break
+                default:
+                    // hmm
+                    break
+                }
             }
         }
     }
