@@ -51,7 +51,6 @@ class GameScene: SKScene {
         userDefaults.set(totalGold, forKey: "totalGold")
         userDefaults.synchronize()
         
-        print("gameScene totalgold : \(totalGold)")
         //###start setup###
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
@@ -89,35 +88,35 @@ class GameScene: SKScene {
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         
         switch menuScene.characterArray[characterIndex!].design{
-        case is UIColor:
-            platform.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
-            platform.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
-            platform.fillTexture = nil
-            
-            base1.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
-            base1.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
-            base1.fillTexture = nil
-            
-            base2.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
-            base2.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
-            base2.fillTexture = nil
-            break
-        case is SKTexture:
-            platform.fillColor = .white
-            platform.strokeColor = .clear
-            platform.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
-            
-            base1.fillColor = .white
-            base1.strokeColor = .clear
-            base1.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
-            
-            base2.fillColor = .white
-            base2.strokeColor = .clear
-            base2.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
-            break
-        default:
-            // hmm
-            break
+            case is UIColor:
+                platform.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+                platform.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+                platform.fillTexture = nil
+                
+                base1.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+                base1.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+                base1.fillTexture = nil
+                
+                base2.fillColor = menuScene.characterArray[characterIndex].design as! UIColor
+                base2.strokeColor = menuScene.characterArray[characterIndex].design as! UIColor
+                base2.fillTexture = nil
+                break
+            case is SKTexture:
+                platform.fillColor = .white
+                platform.strokeColor = .clear
+                platform.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+                
+                base1.fillColor = .white
+                base1.strokeColor = .clear
+                base1.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+                
+                base2.fillColor = .white
+                base2.strokeColor = .clear
+                base2.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
+                break
+            default:
+                // hmm
+                break
         }
         
         platform.position.y = (self.size.height / -2)

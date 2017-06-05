@@ -25,18 +25,28 @@ class MenuScene: SKScene {
     
     var StartBtnNode: SKSpriteNode!
     var CharacterBtnNode: SKSpriteNode!
+    var BuyBtnNode: SKSpriteNode!
     var bestscoreLblNode: SKLabelNode!
+    var CostLbl: SKLabelNode!
     var totalGoldLabelNode: SKLabelNode!
     var coinImg: SKShapeNode!
+    var canPlay: Bool! = true
+    
+    var cost: Int! = 0
     
     var userDefaults = UserDefaults.standard
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
     //.blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown
-    var characterArray: [retardedSquare]! = [retardedSquare(design: UIColor.white, doesCost: false, coins:nil), retardedSquare(design: UIColor.blue, doesCost: false, coins:nil), retardedSquare(design: UIColor.green, doesCost: false, coins:nil), retardedSquare(design: UIColor.gray, doesCost: false, coins:nil), retardedSquare(design: UIColor.cyan, doesCost: false, coins:nil), retardedSquare(design: UIColor.yellow, doesCost: false, coins:nil), retardedSquare(design: UIColor.red, doesCost: false, coins:nil) ,retardedSquare(design: UIColor.purple, doesCost: false, coins:nil), retardedSquare(design: UIColor.orange, doesCost: false, coins:nil), retardedSquare(design: UIColor.brown, doesCost: false, coins:nil), retardedSquare(design: SKTexture(image: #imageLiteral(resourceName: "random")), doesCost: true, coins: 50)]
+    var characterArray: [retardedSquare]! = [retardedSquare(design: UIColor.white, doesCost: false, coins: nil), retardedSquare(design: UIColor.blue, doesCost: false, coins: nil), retardedSquare(design: UIColor.green, doesCost: false, coins: nil), retardedSquare(design: UIColor.gray, doesCost: false, coins:nil), retardedSquare(design: UIColor.cyan, doesCost: false, coins: nil), retardedSquare(design: UIColor.yellow, doesCost: false, coins: nil), retardedSquare(design: UIColor.red, doesCost: false, coins: nil) ,retardedSquare(design: UIColor.purple, doesCost: false, coins: nil), retardedSquare(design: UIColor.orange, doesCost: false, coins: nil), retardedSquare(design: UIColor.brown, doesCost: false, coins: nil), retardedSquare(design: SKTexture(image: #imageLiteral(resourceName: "random")), doesCost: true, coins: 50)]
     
     var characterIndex: Int! = 0
-    var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold")
+
+    var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold"){
+        didSet{
+            totalGoldLabelNode.text = ": \(String(totalGold))"
+        }
+    }
     
     override func didMove(to view: SKView) {
         characterIndex = characterChoice
@@ -46,6 +56,8 @@ class MenuScene: SKScene {
         
         self.StartBtnNode = self.childNode(withName: "StartBtn") as! SKSpriteNode
         self.CharacterBtnNode = self.childNode(withName: "CharacterBtn") as! SKSpriteNode
+        self.BuyBtnNode = SKSpriteNode.init(texture: SKTexture(image: #imageLiteral(resourceName: "BuyBtnTexture")), size: CGSize(width: 150, height: 35))
+        self.CostLbl = self.childNode(withName: "CostLbl") as? SKLabelNode
         
         baseSize = (self.size.width + self.size.height) * 0.05
         
@@ -74,77 +86,46 @@ class MenuScene: SKScene {
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         
-        switch characterArray[characterIndex!].design{
-        case is UIColor:
-            platform.fillColor = characterArray[characterIndex].design as! UIColor
-            platform.strokeColor = characterArray[characterIndex].design as! UIColor
+        if(characterArray[characterIndex].doesCost){
+            canPlay = false
+            
+            cost = characterArray[characterIndex].coins
+            
+            BuyBtnNode.position = CGPoint(x: 120, y: -200)
+            BuyBtnNode.texture = SKTexture(image: #imageLiteral(resourceName: "BuyBtnTexture"))
+            BuyBtnNode.size = CGSize(width: 150, height: 35)
+            BuyBtnNode.name = "BuyBtn"
+            
+            self.CostLbl = SKLabelNode(fontNamed: "Arial")
+            self.CostLbl.text = "Cost: \(cost!)"
+            self.CostLbl.horizontalAlignmentMode = .center
+            self.CostLbl.position = CGPoint(x: -120, y: -210)
+            self.CostLbl.fontSize = 20
+            
+            addChild(CostLbl)
+            addChild(BuyBtnNode)
+            
+            platform.fillColor = .clear
+            platform.strokeColor = .gray
             platform.fillTexture = nil
             
-            base1.fillColor = characterArray[characterIndex].design as! UIColor
-            base1.strokeColor = characterArray[characterIndex].design as! UIColor
-            base1.fillTexture = nil
+            base1.fillColor = .gray
+            base1.strokeColor = .gray
+            base1.fillTexture = SKTexture(image: #imageLiteral(resourceName: "questionMark"))
             
-            base2.fillColor = characterArray[characterIndex].design as! UIColor
-            base2.strokeColor = characterArray[characterIndex].design as! UIColor
-            base2.fillTexture = nil
-            break
-        case is SKTexture:
-            platform.fillColor = .white
-            platform.strokeColor = .clear
-            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
+            base2.fillColor = .gray
+            base2.strokeColor = .gray
+            base2.fillTexture = SKTexture(image: #imageLiteral(resourceName: "questionMark"))
+        }else{
+            canPlay = true
             
-            base1.fillColor = .white
-            base1.strokeColor = .clear
-            base1.fillTexture = characterArray[characterIndex].design as? SKTexture
             
-            base2.fillColor = .white
-            base2.strokeColor = .clear
-            base2.fillTexture = characterArray[characterIndex].design as? SKTexture
-            break
-        default:
-            // hmm
-            break
-        }
-        
-        platform.position.y = (self.size.height / -2)
-        base1.position.y = (platform.position.y) / 2 - baseSize - 6
-        base2.position.y =  base1.position.y + baseSize
-        
-        self.addChild(platform)
-        self.addChild(base1)
-        self.addChild(base2)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        
-        if let location = touch?.location(in: self){
-            let nodeArray = self.nodes(at: location)
-            
-            if(nodeArray.first?.name == "StartBtn"){
-                if let gameScene = GameScene(fileNamed: "GameScene"){
-                    gameScene.scaleMode = .aspectFill
-                    gameScene.characterIndex = self.characterIndex
-                    gameScene.totalGold = self.totalGold
-                    
-                    self.view?.presentScene(gameScene)
-                }
+            if((CostLbl) != nil){
+                BuyBtnNode.removeFromParent()
+                CostLbl.removeFromParent()
             }
             
-            if(nodeArray.first?.name == "CharacterBtn"){
-                if(characterIndex != characterArray.count - 1){
-                    characterIndex? += 1
-                }else{
-                    characterIndex = 0
-                }
-                userDefaults.set(characterIndex, forKey: "characterChoice")
-                userDefaults.synchronize()
-                
-                if (characterArray[characterIndex].doesCost){
-                    //...
-                }
-                
-                switch characterArray[characterIndex!].design{
+            switch characterArray[characterIndex!].design{
                 case is UIColor:
                     platform.fillColor = characterArray[characterIndex].design as! UIColor
                     platform.strokeColor = characterArray[characterIndex].design as! UIColor
@@ -174,6 +155,165 @@ class MenuScene: SKScene {
                 default:
                     // hmm
                     break
+            }
+        }
+        
+        platform.position.y = (self.size.height / -2)
+        base1.position.y = (platform.position.y) / 2 - baseSize - 6
+        base2.position.y =  base1.position.y + baseSize
+        
+        self.addChild(platform)
+        self.addChild(base1)
+        self.addChild(base2)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        
+        if let location = touch?.location(in: self){
+            let nodeArray = self.nodes(at: location)
+            
+            if(canPlay){
+                if(nodeArray.first?.name == "StartBtn"){
+                    if let gameScene = GameScene(fileNamed: "GameScene"){
+                        gameScene.scaleMode = .aspectFill
+                        gameScene.characterIndex = self.characterIndex
+                        gameScene.totalGold = self.totalGold
+                        
+                        self.view?.presentScene(gameScene)
+                    }
+                }
+            }
+            
+            
+        
+            if(nodeArray.first?.name == "CharacterBtn"){
+                if(characterIndex != characterArray.count - 1){
+                    characterIndex? += 1
+                }else{
+                    characterIndex = 0
+                }
+                userDefaults.set(characterIndex, forKey: "characterChoice")
+                userDefaults.synchronize()
+                
+                if(characterArray[characterIndex].doesCost){
+                    canPlay = false
+                    
+                    cost = characterArray[characterIndex].coins
+                    
+                    BuyBtnNode.position = CGPoint(x: 120, y: -200)
+                    BuyBtnNode.texture = SKTexture(image: #imageLiteral(resourceName: "BuyBtnTexture"))
+                    BuyBtnNode.size = CGSize(width: 150, height: 35)
+                    BuyBtnNode.name = "BuyBtn"
+                    
+                    self.CostLbl = SKLabelNode(fontNamed: "Arial")
+                    self.CostLbl.text = "Cost: \(cost!)"
+                    self.CostLbl.horizontalAlignmentMode = .center
+                    self.CostLbl.position = CGPoint(x: -120, y: -210)
+                    self.CostLbl.fontSize = 20
+                    
+                    addChild(CostLbl)
+                    addChild(BuyBtnNode)
+                    
+                    platform.fillColor = .clear
+                    platform.strokeColor = .gray
+                    platform.fillTexture = nil
+                    
+                    base1.fillColor = .gray
+                    base1.strokeColor = .gray
+                    base1.fillTexture = SKTexture(image: #imageLiteral(resourceName: "questionMark"))
+                    
+                    base2.fillColor = .gray
+                    base2.strokeColor = .gray
+                    base2.fillTexture = SKTexture(image: #imageLiteral(resourceName: "questionMark"))
+                }else{
+                    canPlay = true
+                    
+                    if((CostLbl) != nil){
+                        BuyBtnNode.removeFromParent()
+                        CostLbl.removeFromParent()
+                    }
+                    
+                    switch characterArray[characterIndex!].design{
+                        case is UIColor:
+                            platform.fillColor = characterArray[characterIndex].design as! UIColor
+                            platform.strokeColor = characterArray[characterIndex].design as! UIColor
+                            platform.fillTexture = nil
+                            
+                            base1.fillColor = characterArray[characterIndex].design as! UIColor
+                            base1.strokeColor = characterArray[characterIndex].design as! UIColor
+                            base1.fillTexture = nil
+                            
+                            base2.fillColor = characterArray[characterIndex].design as! UIColor
+                            base2.strokeColor = characterArray[characterIndex].design as! UIColor
+                            base2.fillTexture = nil
+                            break
+                        case is SKTexture:
+                            platform.fillColor = .white
+                            platform.strokeColor = .clear
+                            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            
+                            base1.fillColor = .white
+                            base1.strokeColor = .clear
+                            base1.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            
+                            base2.fillColor = .white
+                            base2.strokeColor = .clear
+                            base2.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            break
+                        default:
+                            // hmm
+                            break
+                    }
+                }
+            }
+            
+            if(nodeArray.first?.name == "BuyBtn"){
+                //the only problem with this that i can tell is that when they close the app and re-run it, the
+                //texture is locked again
+                if(characterArray[characterIndex].coins! <= totalGold){
+                    canPlay = true
+                    
+                    totalGold = totalGold - characterArray[characterIndex].coins!
+                    userDefaults.set(totalGold, forKey: "totalGold")
+                    userDefaults.synchronize()
+                    
+                    BuyBtnNode.removeFromParent()
+                    CostLbl.removeFromParent()
+                    
+                    characterArray[characterIndex].doesCost = false
+                    
+                    switch characterArray[characterIndex!].design{
+                        case is UIColor:
+                            platform.fillColor = characterArray[characterIndex].design as! UIColor
+                            platform.strokeColor = characterArray[characterIndex].design as! UIColor
+                            platform.fillTexture = nil
+                            
+                            base1.fillColor = characterArray[characterIndex].design as! UIColor
+                            base1.strokeColor = characterArray[characterIndex].design as! UIColor
+                            base1.fillTexture = nil
+                            
+                            base2.fillColor = characterArray[characterIndex].design as! UIColor
+                            base2.strokeColor = characterArray[characterIndex].design as! UIColor
+                            base2.fillTexture = nil
+                            break
+                        case is SKTexture:
+                            platform.fillColor = .white
+                            platform.strokeColor = .clear
+                            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            
+                            base1.fillColor = .white
+                            base1.strokeColor = .clear
+                            base1.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            
+                            base2.fillColor = .white
+                            base2.strokeColor = .clear
+                            base2.fillTexture = characterArray[characterIndex].design as? SKTexture
+                            break
+                        default:
+                            // hmm
+                            break
+                    }
                 }
             }
         }
