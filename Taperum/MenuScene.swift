@@ -39,7 +39,7 @@ class MenuScene: SKScene {
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
     
-    var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza_mindsunfold")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100)]
+    var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100)]
     
     var characterIndex: Int! = 0
 
@@ -89,6 +89,10 @@ class MenuScene: SKScene {
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         
         if(!characterArray[characterIndex].doesNotCost){
+            if(CostLbl != nil){
+                BuyBtnNode.removeFromParent()
+                CostLbl.removeFromParent()
+            }
             canPlay = false
             
             cost = characterArray[characterIndex].coins
@@ -104,8 +108,8 @@ class MenuScene: SKScene {
             self.CostLbl.position = CGPoint(x: -120, y: -210)
             self.CostLbl.fontSize = 20
             
-            addChild(CostLbl)
             addChild(BuyBtnNode)
+            addChild(CostLbl)
             
             platform.fillColor = .clear
             platform.strokeColor = .gray
@@ -121,7 +125,7 @@ class MenuScene: SKScene {
         }else{
             canPlay = true
             
-            if((CostLbl) != nil){
+            if(CostLbl != nil){
                 BuyBtnNode.removeFromParent()
                 CostLbl.removeFromParent()
             }
@@ -197,6 +201,10 @@ class MenuScene: SKScene {
                 userDefaults.synchronize()
                 
                 if(!characterArray[characterIndex].doesNotCost){
+                    if(CostLbl != nil){
+                        BuyBtnNode.removeFromParent()
+                        CostLbl.removeFromParent()
+                    }
                     canPlay = false
                     
                     cost = characterArray[characterIndex].coins
@@ -212,8 +220,8 @@ class MenuScene: SKScene {
                     self.CostLbl.position = CGPoint(x: -120, y: -210)
                     self.CostLbl.fontSize = 20
                     
-                    addChild(CostLbl)
                     addChild(BuyBtnNode)
+                    addChild(CostLbl)
                     
                     platform.fillColor = .clear
                     platform.strokeColor = .gray
@@ -229,7 +237,7 @@ class MenuScene: SKScene {
                 }else{
                     canPlay = true
                     
-                    if((CostLbl) != nil){
+                    if(CostLbl != nil){
                         BuyBtnNode.removeFromParent()
                         CostLbl.removeFromParent()
                     }
