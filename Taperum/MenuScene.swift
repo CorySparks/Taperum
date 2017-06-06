@@ -9,8 +9,9 @@
 import SpriteKit
 
 struct retardedSquare {
+    var name: String
     var design: AnyObject
-    var doesCost: Bool
+    var doesNotCost: Bool
     var coins: Int?
 }
 
@@ -37,8 +38,8 @@ class MenuScene: SKScene {
     var userDefaults = UserDefaults.standard
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
-    //.blue, .green, .gray, .cyan, .yellow, .red, .purple, .orange, .brown
-    var characterArray: [retardedSquare]! = [retardedSquare(design: UIColor.white, doesCost: false, coins: nil), retardedSquare(design: UIColor.blue, doesCost: false, coins: nil), retardedSquare(design: UIColor.green, doesCost: false, coins: nil), retardedSquare(design: UIColor.gray, doesCost: false, coins:nil), retardedSquare(design: UIColor.cyan, doesCost: false, coins: nil), retardedSquare(design: UIColor.yellow, doesCost: false, coins: nil), retardedSquare(design: UIColor.red, doesCost: false, coins: nil) ,retardedSquare(design: UIColor.purple, doesCost: false, coins: nil), retardedSquare(design: UIColor.orange, doesCost: false, coins: nil), retardedSquare(design: UIColor.brown, doesCost: false, coins: nil), retardedSquare(design: SKTexture(image: #imageLiteral(resourceName: "random")), doesCost: true, coins: 50)]
+    
+    var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza_mindsunfold")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100)]
     
     var characterIndex: Int! = 0
 
@@ -50,6 +51,7 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         characterIndex = characterChoice
+        
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
         self.base2 = self.childNode(withName: "base2") as? SKShapeNode
         self.platform = self.childNode(withName: "BasePlatform") as? SKShapeNode
@@ -86,7 +88,7 @@ class MenuScene: SKScene {
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         self.base2 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
         
-        if(characterArray[characterIndex].doesCost){
+        if(!characterArray[characterIndex].doesNotCost){
             canPlay = false
             
             cost = characterArray[characterIndex].coins
@@ -119,7 +121,6 @@ class MenuScene: SKScene {
         }else{
             canPlay = true
             
-            
             if((CostLbl) != nil){
                 BuyBtnNode.removeFromParent()
                 CostLbl.removeFromParent()
@@ -142,8 +143,7 @@ class MenuScene: SKScene {
                 case is SKTexture:
                     platform.fillColor = .white
                     platform.strokeColor = .clear
-                    platform.fillTexture = characterArray[characterIndex].design as? SKTexture
-                    
+
                     base1.fillColor = .white
                     base1.strokeColor = .clear
                     base1.fillTexture = characterArray[characterIndex].design as? SKTexture
@@ -196,7 +196,7 @@ class MenuScene: SKScene {
                 userDefaults.set(characterIndex, forKey: "characterChoice")
                 userDefaults.synchronize()
                 
-                if(characterArray[characterIndex].doesCost){
+                if(!characterArray[characterIndex].doesNotCost){
                     canPlay = false
                     
                     cost = characterArray[characterIndex].coins
@@ -251,7 +251,6 @@ class MenuScene: SKScene {
                         case is SKTexture:
                             platform.fillColor = .white
                             platform.strokeColor = .clear
-                            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
                             
                             base1.fillColor = .white
                             base1.strokeColor = .clear
@@ -272,16 +271,18 @@ class MenuScene: SKScene {
                 //the only problem with this that i can tell is that when they close the app and re-run it, the
                 //texture is locked again
                 if(characterArray[characterIndex].coins! <= totalGold){
-                    canPlay = true
-                    
                     totalGold = totalGold - characterArray[characterIndex].coins!
                     userDefaults.set(totalGold, forKey: "totalGold")
+                    userDefaults.synchronize()
+                    
+                    userDefaults.set(true, forKey: characterArray[characterIndex].name)
                     userDefaults.synchronize()
                     
                     BuyBtnNode.removeFromParent()
                     CostLbl.removeFromParent()
                     
-                    characterArray[characterIndex].doesCost = false
+                    characterArray[characterIndex].doesNotCost = true
+                    canPlay = true
                     
                     switch characterArray[characterIndex!].design{
                         case is UIColor:
@@ -300,7 +301,6 @@ class MenuScene: SKScene {
                         case is SKTexture:
                             platform.fillColor = .white
                             platform.strokeColor = .clear
-                            platform.fillTexture = characterArray[characterIndex].design as? SKTexture
                             
                             base1.fillColor = .white
                             base1.strokeColor = .clear

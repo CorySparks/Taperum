@@ -104,7 +104,6 @@ class GameScene: SKScene {
             case is SKTexture:
                 platform.fillColor = .white
                 platform.strokeColor = .clear
-                platform.fillTexture = menuScene.characterArray[characterIndex].design as? SKTexture
                 
                 base1.fillColor = .white
                 base1.strokeColor = .clear
