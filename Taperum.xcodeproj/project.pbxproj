@@ -7,10 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B3FF5661EE9E94000BAF1A0 /* thirdTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B3FF5651EE9E94000BAF1A0 /* thirdTut.sks */; };
+		8B3FF5681EE9E96900BAF1A0 /* thirdTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FF5671EE9E96900BAF1A0 /* thirdTut.swift */; };
+		8B3FF56A1EE9ED0A00BAF1A0 /* forthTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B3FF5691EE9ED0A00BAF1A0 /* forthTut.sks */; };
+		8B3FF56C1EE9ED2D00BAF1A0 /* forthTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FF56B1EE9ED2D00BAF1A0 /* forthTut.swift */; };
+		8B3FF56E1EE9EF4E00BAF1A0 /* fifthTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B3FF56D1EE9EF4E00BAF1A0 /* fifthTut.sks */; };
+		8B3FF5701EE9EF6B00BAF1A0 /* fifthTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FF56F1EE9EF6B00BAF1A0 /* fifthTut.swift */; };
+		8B3FF5721EE9F0E200BAF1A0 /* sixthTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B3FF5711EE9F0E200BAF1A0 /* sixthTut.sks */; };
+		8B3FF5741EE9F0FE00BAF1A0 /* sixthTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FF5731EE9F0FE00BAF1A0 /* sixthTut.swift */; };
+		8B3FF5761EE9F32F00BAF1A0 /* finalTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B3FF5751EE9F32F00BAF1A0 /* finalTut.sks */; };
+		8B3FF5781EE9F34E00BAF1A0 /* finalTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FF5771EE9F34E00BAF1A0 /* finalTut.swift */; };
 		8B568F421ED99B47001B7961 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F411ED99B47001B7961 /* MyParticle.sks */; };
 		8B568F441EDB7DA6001B7961 /* coinGrabSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */; };
 		8B568F481EDB81E6001B7961 /* tapSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F471EDB81E6001B7961 /* tapSound.wav */; };
 		8B568F4A1EDB81F0001B7961 /* playSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B568F491EDB81F0001B7961 /* playSound.wav */; };
+		8B78D0411EE990E300066F3B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78D0401EE990E300066F3B /* Alert.swift */; };
+		8B78D0431EE9940000066F3B /* firstTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B78D0421EE9940000066F3B /* firstTut.sks */; };
+		8B78D0451EE9948000066F3B /* firstTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78D0441EE9948000066F3B /* firstTut.swift */; };
+		8B78D0471EE9AA1700066F3B /* secondTut.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B78D0461EE9AA1700066F3B /* secondTut.sks */; };
+		8B78D0491EE9AA5600066F3B /* secondTut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78D0481EE9AA5600066F3B /* secondTut.swift */; };
 		8B82A5AC1EC4C870001C88D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */; };
 		8B82A5AE1EC4C870001C88D3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AD1EC4C870001C88D3 /* GameScene.sks */; };
 		8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B82A5AF1EC4C870001C88D3 /* Actions.sks */; };
@@ -45,10 +60,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B3FF5651EE9E94000BAF1A0 /* thirdTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = thirdTut.sks; sourceTree = "<group>"; };
+		8B3FF5671EE9E96900BAF1A0 /* thirdTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = thirdTut.swift; sourceTree = "<group>"; };
+		8B3FF5691EE9ED0A00BAF1A0 /* forthTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = forthTut.sks; sourceTree = "<group>"; };
+		8B3FF56B1EE9ED2D00BAF1A0 /* forthTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = forthTut.swift; sourceTree = "<group>"; };
+		8B3FF56D1EE9EF4E00BAF1A0 /* fifthTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fifthTut.sks; sourceTree = "<group>"; };
+		8B3FF56F1EE9EF6B00BAF1A0 /* fifthTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fifthTut.swift; sourceTree = "<group>"; };
+		8B3FF5711EE9F0E200BAF1A0 /* sixthTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sixthTut.sks; sourceTree = "<group>"; };
+		8B3FF5731EE9F0FE00BAF1A0 /* sixthTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sixthTut.swift; sourceTree = "<group>"; };
+		8B3FF5751EE9F32F00BAF1A0 /* finalTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = finalTut.sks; sourceTree = "<group>"; };
+		8B3FF5771EE9F34E00BAF1A0 /* finalTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = finalTut.swift; sourceTree = "<group>"; };
 		8B568F411ED99B47001B7961 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
 		8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coinGrabSound.wav; sourceTree = "<group>"; };
 		8B568F471EDB81E6001B7961 /* tapSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tapSound.wav; sourceTree = "<group>"; };
 		8B568F491EDB81F0001B7961 /* playSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = playSound.wav; sourceTree = "<group>"; };
+		8B78D0401EE990E300066F3B /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		8B78D0421EE9940000066F3B /* firstTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = firstTut.sks; sourceTree = "<group>"; };
+		8B78D0441EE9948000066F3B /* firstTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = firstTut.swift; sourceTree = "<group>"; };
+		8B78D0461EE9AA1700066F3B /* secondTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = secondTut.sks; sourceTree = "<group>"; };
+		8B78D0481EE9AA5600066F3B /* secondTut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = secondTut.swift; sourceTree = "<group>"; };
 		8B82A5A81EC4C870001C88D3 /* Taperum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taperum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B82A5AD1EC4C870001C88D3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -121,6 +151,7 @@
 			children = (
 				8B82A5AB1EC4C870001C88D3 /* AppDelegate.swift */,
 				8B82A5AF1EC4C870001C88D3 /* Actions.sks */,
+				8B78D0401EE990E300066F3B /* Alert.swift */,
 				8B847AE81ED4992500682AB0 /* MenuScene.sks */,
 				8B847AEA1ED49C0200682AB0 /* MenuScene.swift */,
 				8BA9ED2F1ED4C67A008B2DC0 /* GameOverScene.sks */,
@@ -128,6 +159,20 @@
 				8B82A5AD1EC4C870001C88D3 /* GameScene.sks */,
 				8B82A5B11EC4C870001C88D3 /* GameScene.swift */,
 				8B82A5B31EC4C870001C88D3 /* GameViewController.swift */,
+				8B78D0421EE9940000066F3B /* firstTut.sks */,
+				8B78D0441EE9948000066F3B /* firstTut.swift */,
+				8B78D0461EE9AA1700066F3B /* secondTut.sks */,
+				8B78D0481EE9AA5600066F3B /* secondTut.swift */,
+				8B3FF5651EE9E94000BAF1A0 /* thirdTut.sks */,
+				8B3FF5671EE9E96900BAF1A0 /* thirdTut.swift */,
+				8B3FF5691EE9ED0A00BAF1A0 /* forthTut.sks */,
+				8B3FF56B1EE9ED2D00BAF1A0 /* forthTut.swift */,
+				8B3FF56D1EE9EF4E00BAF1A0 /* fifthTut.sks */,
+				8B3FF56F1EE9EF6B00BAF1A0 /* fifthTut.swift */,
+				8B3FF5711EE9F0E200BAF1A0 /* sixthTut.sks */,
+				8B3FF5731EE9F0FE00BAF1A0 /* sixthTut.swift */,
+				8B3FF5751EE9F32F00BAF1A0 /* finalTut.sks */,
+				8B3FF5771EE9F34E00BAF1A0 /* finalTut.swift */,
 				8B82A5B51EC4C870001C88D3 /* Main.storyboard */,
 				8B568F491EDB81F0001B7961 /* playSound.wav */,
 				8B568F431EDB7DA6001B7961 /* coinGrabSound.wav */,
@@ -269,12 +314,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B568F481EDB81E6001B7961 /* tapSound.wav in Resources */,
+				8B3FF5721EE9F0E200BAF1A0 /* sixthTut.sks in Resources */,
+				8B3FF5661EE9E94000BAF1A0 /* thirdTut.sks in Resources */,
 				8B82A5B71EC4C870001C88D3 /* Main.storyboard in Resources */,
+				8B78D0431EE9940000066F3B /* firstTut.sks in Resources */,
+				8B3FF56A1EE9ED0A00BAF1A0 /* forthTut.sks in Resources */,
 				8B847AE91ED4992500682AB0 /* MenuScene.sks in Resources */,
 				8B568F4A1EDB81F0001B7961 /* playSound.wav in Resources */,
+				8B3FF5761EE9F32F00BAF1A0 /* finalTut.sks in Resources */,
 				8B82A5AE1EC4C870001C88D3 /* GameScene.sks in Resources */,
 				8BA9ED301ED4C67A008B2DC0 /* GameOverScene.sks in Resources */,
+				8B3FF56E1EE9EF4E00BAF1A0 /* fifthTut.sks in Resources */,
 				8B82A5B91EC4C870001C88D3 /* Assets.xcassets in Resources */,
+				8B78D0471EE9AA1700066F3B /* secondTut.sks in Resources */,
 				8B568F441EDB7DA6001B7961 /* coinGrabSound.wav in Resources */,
 				8B82A5BC1EC4C870001C88D3 /* LaunchScreen.storyboard in Resources */,
 				8B82A5B01EC4C870001C88D3 /* Actions.sks in Resources */,
@@ -303,10 +355,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3FF5681EE9E96900BAF1A0 /* thirdTut.swift in Sources */,
+				8B3FF56C1EE9ED2D00BAF1A0 /* forthTut.swift in Sources */,
+				8B3FF5741EE9F0FE00BAF1A0 /* sixthTut.swift in Sources */,
+				8B78D0411EE990E300066F3B /* Alert.swift in Sources */,
 				8B82A5B21EC4C870001C88D3 /* GameScene.swift in Sources */,
 				8B847AEB1ED49C0200682AB0 /* MenuScene.swift in Sources */,
+				8B78D0491EE9AA5600066F3B /* secondTut.swift in Sources */,
+				8B78D0451EE9948000066F3B /* firstTut.swift in Sources */,
 				8B82A5B41EC4C870001C88D3 /* GameViewController.swift in Sources */,
 				8BA9ED321ED4C716008B2DC0 /* GameOverScene.swift in Sources */,
+				8B3FF5701EE9EF6B00BAF1A0 /* fifthTut.swift in Sources */,
+				8B3FF5781EE9F34E00BAF1A0 /* finalTut.swift in Sources */,
 				8B82A5AC1EC4C870001C88D3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

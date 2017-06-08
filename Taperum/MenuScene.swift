@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import UIKit
 
 struct retardedSquare {
     var name: String
@@ -15,12 +16,14 @@ struct retardedSquare {
     var coins: Int?
 }
 
-class MenuScene: SKScene {
+class MenuScene: SKScene, Alert {
     //This scene is just the start button and the character button
     
     private var base1 : SKShapeNode!
     private var base2 : SKShapeNode!
     private var platform : SKShapeNode!
+    private var textBox: SKShapeNode!
+    private var textBoxLbl: SKLabelNode!
     
     public var baseSize : CGFloat!
     
@@ -50,6 +53,8 @@ class MenuScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        
         characterIndex = characterChoice
         
         self.base1 = self.childNode(withName: "base1") as? SKShapeNode
@@ -169,6 +174,21 @@ class MenuScene: SKScene {
         self.addChild(platform)
         self.addChild(base1)
         self.addChild(base2)
+        
+        if(!launchedBefore){
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            
+            tutorial()
+        }
+    }
+    
+    func tutorial(){
+        canPlay = false
+        
+        let when = DispatchTime.now() + 1
+        DispatchQueue.main.asyncAfter(deadline: when){
+            self.showAlert()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
