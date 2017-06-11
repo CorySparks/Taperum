@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import Social
 
 class GameOverScene: SKScene {
     
@@ -19,6 +20,8 @@ class GameOverScene: SKScene {
     var bestScoreLabel: SKLabelNode!
     var newGameBtnNode: SKSpriteNode!
     var menuBtnNode: SKSpriteNode!
+    var twitterLogo: SKSpriteNode!
+    var facebookLogo: SKSpriteNode!
     
     var userDefaults = UserDefaults.standard
     
@@ -68,7 +71,37 @@ class GameOverScene: SKScene {
                     
                     self.view?.presentScene(gameScene, transition: transition)
                 }
-                
+            }
+            
+            if(nodeArray.first?.name == "facebook"){
+                if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
+                    let fbShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                    
+                    self.view?.window?.rootViewController?.present(fbShare, animated: true, completion: nil)
+                    
+                } else {
+                    let alert = UIAlertController(title: "Accounts", message: "It looks like you do not have the Facebook app, download the app and share your score with friends!", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+                }
+            }
+            
+            if(nodeArray.first?.name == "twitter"){
+                if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
+                    
+                    let tweetShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                    
+                    self.view?.window?.rootViewController?.present(tweetShare, animated: true, completion: nil)
+                    
+                } else {
+                    
+                    let alert = UIAlertController(title: "Accounts", message: "It looks like you do not have the Twitter app, download the app and share your score with friends!", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    
+                    self.view?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+                }
             }
             
             if(nodeArray.first?.name == "menuBtn"){

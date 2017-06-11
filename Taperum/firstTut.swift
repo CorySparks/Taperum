@@ -38,5 +38,4 @@ class firstTut: SKScene{
             }
         }
     }
-    
 }

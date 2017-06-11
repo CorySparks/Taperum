@@ -8,6 +8,7 @@
 
 import SpriteKit
 import UIKit
+import StoreKit
 
 struct retardedSquare {
     var name: String
@@ -18,6 +19,8 @@ struct retardedSquare {
 
 class MenuScene: SKScene, Alert {
     //This scene is just the start button and the character button
+    
+    public static let Coin300IAP = "com.com.TheGlassHouseStudios.Taperum.300CoinsTaperum"
     
     private var base1 : SKShapeNode!
     private var base2 : SKShapeNode!
@@ -43,6 +46,31 @@ class MenuScene: SKScene, Alert {
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
     
     var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100)]
+    
+    static let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        
+        formatter.formatterBehavior = .behavior10_4
+        formatter.numberStyle = .currency
+        
+        return formatter
+    }()
+    
+    var buyButtonHandler: ((_ product: SKProduct) -> ())?
+    
+    var product: SKProduct? {
+        didSet {
+            //guard let product = product else { return }
+            
+            //textLabel?.text = product.localizedTitle
+            
+            if (IAPHelper.canMakePayments()){
+                
+            }else{
+                //"Not available"
+            }
+        }
+    }
     
     var characterIndex: Int! = 0
 
@@ -79,15 +107,15 @@ class MenuScene: SKScene, Alert {
             coinImg.fillColor = .white
             coinImg.strokeColor = .clear
             coinImg.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
-            coinImg.position = CGPoint(x: -30, y: -90)
+            coinImg.position = CGPoint(x: -55, y: 10)
         }
         
         self.totalGoldLabelNode = SKLabelNode(fontNamed: "Arial")
         self.totalGoldLabelNode.text = ": \(String(totalGold))"
         self.totalGoldLabelNode.horizontalAlignmentMode = .center
         self.totalGoldLabelNode.position = CGPoint(x: 15, y: -100)
-        addChild(coinImg)
         addChild(totalGoldLabelNode)
+        totalGoldLabelNode.addChild(coinImg)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
@@ -206,6 +234,15 @@ class MenuScene: SKScene, Alert {
                         
                         self.view?.presentScene(gameScene)
                     }
+                }
+            }
+            
+            if(nodeArray.first?.name == "StoreBtn"){
+                if let storeScene = StoreScene(fileNamed: "StoreScene"){
+                    let transition = SKTransition.fade(withDuration: 1.0)
+                    storeScene.scaleMode = .aspectFill
+                    
+                    self.view?.presentScene(storeScene, transition: transition)
                 }
             }
             
