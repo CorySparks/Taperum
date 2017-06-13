@@ -9,6 +9,7 @@
 import SpriteKit
 import UIKit
 import StoreKit
+import GameKit
 
 struct retardedSquare {
     var name: String
@@ -21,6 +22,11 @@ class MenuScene: SKScene, Alert {
     //This scene is just the start button and the character button
     
     public static let Coin300IAP = "com.com.TheGlassHouseStudios.Taperum.300CoinsTaperum"
+    
+    var gcEnabled = Bool()
+    var gcDefaultLeaderBoard = String()
+    
+    let LEADERBOARD_ID = "com.TheGlassHouseStudios.score.Taperum"
     
     private var base1 : SKShapeNode!
     private var base2 : SKShapeNode!
@@ -81,6 +87,7 @@ class MenuScene: SKScene, Alert {
     }
     
     override func didMove(to view: SKView) {
+        authenticateLocalPlayer()
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         
         characterIndex = characterChoice
@@ -101,6 +108,8 @@ class MenuScene: SKScene, Alert {
         self.bestscoreLblNode.horizontalAlignmentMode = .center
         self.bestscoreLblNode.position = CGPoint(x: 0, y: -50)
         addChild(bestscoreLblNode)
+        
+        addScoreAndSubmitToGC(bestScore as AnyObject)
         
         self.coinImg = SKShapeNode.init(rectOf: CGSize.init(width: 60, height: 60))
         if let coinImg = self.coinImg {
@@ -210,12 +219,60 @@ class MenuScene: SKScene, Alert {
         }
     }
     
+    func addScoreAndSubmitToGC(_ sender: AnyObject) {
+        
+        // Submit score to GC leaderboard
+        let bestScoreInt = GKScore(leaderboardIdentifier: LEADERBOARD_ID)
+        bestScoreInt.value = Int64(bestScore)
+        GKScore.report([bestScoreInt]) { (error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                print("Best Score submitted to your Leaderboard!")
+            }
+        }
+    }
+    
+    func checkGCLeaderboard(_ sender: AnyObject) {
+        let gcVC = GKGameCenterViewController()
+        gcVC.gameCenterDelegate = self as? GKGameCenterControllerDelegate
+        gcVC.viewState = .leaderboards
+        gcVC.leaderboardIdentifier = LEADERBOARD_ID
+        self.view?.window?.rootViewController?.present(gcVC, animated: true, completion: nil)
+    }
+    
     func tutorial(){
         canPlay = false
         
         let when = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: when){
             self.showAlert()
+        }
+    }
+    
+    func authenticateLocalPlayer() {
+        let localPlayer: GKLocalPlayer = GKLocalPlayer.localPlayer()
+        
+        localPlayer.authenticateHandler = {(ViewController, error) -> Void in
+            if((ViewController) != nil) {
+                // 1. Show login if player is not logged in
+                self.view?.window?.rootViewController?.present(ViewController!, animated: true, completion: nil)
+            } else if (localPlayer.isAuthenticated) {
+                // 2. Player is already authenticated & logged in, load game center
+                self.gcEnabled = true
+                
+                // Get the default leaderboard ID
+                localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
+                    if error != nil { print(error)
+                    } else { self.gcDefaultLeaderBoard = leaderboardIdentifer! }
+                })
+                
+            } else {
+                // 3. Game center is not enabled on the users device
+                self.gcEnabled = false
+                print("Local player could not be authenticated!")
+                print(error)
+            }
         }
     }
     
@@ -383,5 +440,4 @@ class MenuScene: SKScene, Alert {
             }
         }
     }
-
 }

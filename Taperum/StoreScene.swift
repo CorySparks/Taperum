@@ -23,7 +23,7 @@ class StoreScene: SKScene{
     var Coin1700IAP: SKSpriteNode!
     var BuyBtnNode1700: SKSpriteNode!
     var Coin1700CostLbl: SKLabelNode!
-
+    
     var Coin4000IAP: SKSpriteNode!
     var BuyBtnNode4000: SKSpriteNode!
     var Coin4000CostLbl: SKLabelNode!
@@ -132,15 +132,15 @@ class StoreScene: SKScene{
         // Put here your IAP Products ID's
         let productIdentifiers = NSSet(objects:
             "300CoinsTaperum",
-            "1700CoinsTaperum",
-             "4000CoinsTaperum"
+                                       "1700CoinsTaperum",
+                                       "4000CoinsTaperum"
         )
         
         productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
         productsRequest.delegate = self as? SKProductsRequestDelegate
         productsRequest.start()
     }
-
+    
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction:AnyObject in transactions {
             if let trans = transaction as? SKPaymentTransaction {
