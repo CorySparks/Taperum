@@ -8,6 +8,7 @@
 
 import SpriteKit
 import UIKit
+import StoreKit
 
 
 class StoreScene: SKScene{
@@ -26,6 +27,11 @@ class StoreScene: SKScene{
     var Coin4000IAP: SKSpriteNode!
     var BuyBtnNode4000: SKSpriteNode!
     var Coin4000CostLbl: SKLabelNode!
+    
+    var productID = ""
+    var productsRequest = SKProductsRequest()
+    var productsResponse = SKProductsResponse()
+    var iapProducts = [SKProduct]()
     
     override func didMove(to view: SKView) {
         scrollView = CustomScrollView.init(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), scene: self, moveableNode: moveableNode, scrollDirection: .horizontal)
@@ -82,7 +88,7 @@ class StoreScene: SKScene{
         self.BuyBtnNode4000 = SKSpriteNode.init(texture: SKTexture(image: #imageLiteral(resourceName: "BuyBtnTexture")), size: CGSize(width: 200, height: 60))
         BuyBtnNode4000.position = CGPoint(x: 0, y: -150)
         BuyBtnNode4000.zPosition = 10
-        BuyBtnNode4000.name = "BuyBtnNode4000"
+        BuyBtnNode4000.name = "BuyBtn4000"
         
         self.Coin4000CostLbl = SKLabelNode(fontNamed: "Arial")
         self.Coin4000CostLbl.text = "4000 Coins $9.99"
@@ -93,6 +99,124 @@ class StoreScene: SKScene{
         moveableNode.addChild(Coin4000IAP)
         Coin4000IAP.addChild(BuyBtnNode4000)
         Coin4000IAP.addChild(Coin4000CostLbl)
+        
+        // Fetch IAP Products available
+        fetchAvailableProducts()
+        taperumProducts(productsRequest, didReceive: productsResponse)
+    }
+    
+    func canMakePurchases() -> Bool {
+        return SKPaymentQueue.canMakePayments()
+    }
+    
+    func purchaseMyProduct(product: SKProduct) {
+        if self.canMakePurchases(){
+            let payment = SKPayment(product: product)
+            //SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(payment)
+            
+            print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
+            productID = product.productIdentifier
+            
+            // IAP Purchases dsabled on the Device
+        } else {
+            UIAlertView(title: "Sorry!",
+                        message: "Purchases are disabled in your device!",
+                        delegate: nil, cancelButtonTitle: "OK").show()
+        }
+    }
+    
+    // MARK: - FETCH AVAILABLE IAP PRODUCTS
+    func fetchAvailableProducts()  {
+        
+        // Put here your IAP Products ID's
+        let productIdentifiers = NSSet(objects:
+            "300CoinsTaperum",
+            "1700CoinsTaperum",
+             "4000CoinsTaperum"
+        )
+        
+        productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
+        productsRequest.delegate = self as? SKProductsRequestDelegate
+        productsRequest.start()
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction:AnyObject in transactions {
+            if let trans = transaction as? SKPaymentTransaction {
+                switch trans.transactionState {
+                    
+                case .purchased:
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    
+                    // The Consumable product (10 coins) has been purchased -> gain 10 extra coins!
+                    if productID == "300CoinsTaperum" {
+                        
+                        // Add 10 coins and save their total amount
+                        let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 300
+                        UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
+                        //make label for their total gold
+                        
+                        UIAlertView(title: "YAY!",
+                                    message: "You've successfully bought 300 extra coins!",
+                                    delegate: nil,
+                                    cancelButtonTitle: "Too Lit!").show()
+                        
+                        
+                        
+                        // The Non-Consumable product (Premium) has been purchased!
+                    } else if productID == "1700CoinsTaperum" {
+                        
+                        // Add 10 coins and save their total amount
+                        let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 1700
+                        UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
+                        //make label for their total gold
+                        
+                        UIAlertView(title: "YAY!",
+                                    message: "You've successfully bought 1700 extra coins!",
+                                    delegate: nil,
+                                    cancelButtonTitle: "Too Lit!").show()
+                        
+                        
+                        
+                        // The Non-Consumable product (Premium) has been purchased!
+                    } else if productID == "4000CoinsTaperum" {
+                        
+                        // Add 10 coins and save their total amount
+                        let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 4000
+                        UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
+                        //make label for their total gold
+                        
+                        UIAlertView(title: "YAY!",
+                                    message: "You've successfully bought 4000 extra coins!",
+                                    delegate: nil,
+                                    cancelButtonTitle: "Too Lit!").show()
+                        
+                        
+                        
+                        // The Non-Consumable product (Premium) has been purchased!
+                    }
+                    
+                    break
+                    
+                case .failed:
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    break
+                case .restored:
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    break
+                    
+                default: break
+                }}}
+    }
+    
+    // MARK: - REQUEST IAP PRODUCTS
+    func taperumProducts(_ request: SKProductsRequest, didReceive response: SKProductsResponse){
+        print(response.products)
+        if (response.products.count > 0){
+            print(response.products)
+            iapProducts = response.products
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -101,14 +225,15 @@ class StoreScene: SKScene{
         if let location = touch?.location(in: self){
             let nodeArray = self.nodes(at: location)
             
-            if(nodeArray.first?.name == "Next"){
-                let transition = SKTransition.fade(withDuration: 1.0)
-                if let SecondTut = secondTut(fileNamed: "secondTut"){
-                    SecondTut.scaleMode = .aspectFill
-                    
-                    self.view?.presentScene(SecondTut, transition: transition)
-                }
-                
+            if(nodeArray.first?.name == "BuyBtn300"){
+                // MARK: - MAKE PURCHASE OF A PRODUCT
+                purchaseMyProduct(product: iapProducts[0])
+            } else if(nodeArray.first?.name == "BuyBtn1700"){
+                // MARK: - MAKE PURCHASE OF A PRODUCT
+                purchaseMyProduct(product: iapProducts[1])
+            } else if(nodeArray.first?.name == "BuyBtn4000"){
+                // MARK: - MAKE PURCHASE OF A PRODUCT
+                purchaseMyProduct(product: iapProducts[2])
             }
             
             if(nodeArray.first?.name == "Menu"){

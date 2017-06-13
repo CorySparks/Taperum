@@ -44,6 +44,8 @@
 		8B847AE91ED4992500682AB0 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B847AE81ED4992500682AB0 /* MenuScene.sks */; };
 		8B847AEB1ED49C0200682AB0 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B847AEA1ED49C0200682AB0 /* MenuScene.swift */; };
 		8BA9ED321ED4C716008B2DC0 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA9ED311ED4C716008B2DC0 /* GameOverScene.swift */; };
+		8BE78B351EEF11F500320CEC /* Taperum Notifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8BE78B271EEF11F500320CEC /* Taperum Notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8BE78B4F1EEF238F00320CEC /* notifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8BE78B431EEF238F00320CEC /* notifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BFAE4321EEC980700303392 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8BFAE4311EEC980700303392 /* GameOverScene.sks */; };
 		8BFAE4361EEC9BE900303392 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFAE4351EEC9BE900303392 /* CustomScrollView.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +65,36 @@
 			remoteGlobalIDString = 8B82A5A71EC4C870001C88D3;
 			remoteInfo = Taperum;
 		};
+		8BE78B331EEF11F500320CEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B82A5A01EC4C870001C88D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BE78B261EEF11F500320CEC;
+			remoteInfo = "Taperum Notifications";
+		};
+		8BE78B4D1EEF238F00320CEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B82A5A01EC4C870001C88D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BE78B421EEF238F00320CEC;
+			remoteInfo = notifications;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8BE78B391EEF11F500320CEC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8BE78B351EEF11F500320CEC /* Taperum Notifications.appex in Embed App Extensions */,
+				8BE78B4F1EEF238F00320CEC /* notifications.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8B3FF5651EE9E94000BAF1A0 /* thirdTut.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = thirdTut.sks; sourceTree = "<group>"; };
@@ -109,6 +140,8 @@
 		8B847AE81ED4992500682AB0 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MenuScene.sks; path = ../MenuScene.sks; sourceTree = "<group>"; };
 		8B847AEA1ED49C0200682AB0 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		8BA9ED311ED4C716008B2DC0 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		8BE78B271EEF11F500320CEC /* Taperum Notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Taperum Notifications.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BE78B431EEF238F00320CEC /* notifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = notifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFAE4311EEC980700303392 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 		8BFAE4351EEC9BE900303392 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +163,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B82A5CA1EC4C870001C88D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BE78B241EEF11F500320CEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BE78B401EEF238F00320CEC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -164,6 +211,8 @@
 				8B82A5A81EC4C870001C88D3 /* Taperum.app */,
 				8B82A5C21EC4C870001C88D3 /* TaperumTests.xctest */,
 				8B82A5CD1EC4C870001C88D3 /* TaperumUITests.xctest */,
+				8BE78B271EEF11F500320CEC /* Taperum Notifications.appex */,
+				8BE78B431EEF238F00320CEC /* notifications.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,10 +289,13 @@
 				8B82A5A41EC4C870001C88D3 /* Sources */,
 				8B82A5A51EC4C870001C88D3 /* Frameworks */,
 				8B82A5A61EC4C870001C88D3 /* Resources */,
+				8BE78B391EEF11F500320CEC /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8BE78B341EEF11F500320CEC /* PBXTargetDependency */,
+				8BE78B4E1EEF238F00320CEC /* PBXTargetDependency */,
 			);
 			name = Taperum;
 			productName = Taperum;
@@ -286,6 +338,40 @@
 			productReference = 8B82A5CD1EC4C870001C88D3 /* TaperumUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8BE78B261EEF11F500320CEC /* Taperum Notifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BE78B361EEF11F500320CEC /* Build configuration list for PBXNativeTarget "Taperum Notifications" */;
+			buildPhases = (
+				8BE78B231EEF11F500320CEC /* Sources */,
+				8BE78B241EEF11F500320CEC /* Frameworks */,
+				8BE78B251EEF11F500320CEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Taperum Notifications";
+			productName = "Taperum Notifications";
+			productReference = 8BE78B271EEF11F500320CEC /* Taperum Notifications.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		8BE78B421EEF238F00320CEC /* notifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BE78B501EEF238F00320CEC /* Build configuration list for PBXNativeTarget "notifications" */;
+			buildPhases = (
+				8BE78B3F1EEF238F00320CEC /* Sources */,
+				8BE78B401EEF238F00320CEC /* Frameworks */,
+				8BE78B411EEF238F00320CEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = notifications;
+			productName = notifications;
+			productReference = 8BE78B431EEF238F00320CEC /* notifications.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -304,6 +390,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					8B82A5C11EC4C870001C88D3 = {
@@ -317,6 +406,16 @@
 						DevelopmentTeam = 3H6K3KJDMH;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8B82A5A71EC4C870001C88D3;
+					};
+					8BE78B261EEF11F500320CEC = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 3H6K3KJDMH;
+						ProvisioningStyle = Automatic;
+					};
+					8BE78B421EEF238F00320CEC = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 3H6K3KJDMH;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -336,6 +435,8 @@
 				8B82A5A71EC4C870001C88D3 /* Taperum */,
 				8B82A5C11EC4C870001C88D3 /* TaperumTests */,
 				8B82A5CC1EC4C870001C88D3 /* TaperumUITests */,
+				8BE78B261EEF11F500320CEC /* Taperum Notifications */,
+				8BE78B421EEF238F00320CEC /* notifications */,
 			);
 		};
 /* End PBXProject section */
@@ -375,6 +476,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B82A5CB1EC4C870001C88D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BE78B251EEF11F500320CEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BE78B411EEF238F00320CEC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -424,6 +539,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BE78B231EEF11F500320CEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BE78B3F1EEF238F00320CEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -436,6 +565,16 @@
 			isa = PBXTargetDependency;
 			target = 8B82A5A71EC4C870001C88D3 /* Taperum */;
 			targetProxy = 8B82A5CE1EC4C870001C88D3 /* PBXContainerItemProxy */;
+		};
+		8BE78B341EEF11F500320CEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BE78B261EEF11F500320CEC /* Taperum Notifications */;
+			targetProxy = 8BE78B331EEF11F500320CEC /* PBXContainerItemProxy */;
+		};
+		8BE78B4E1EEF238F00320CEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BE78B421EEF238F00320CEC /* notifications */;
+			targetProxy = 8BE78B4D1EEF238F00320CEC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -559,6 +698,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Taperum/Taperum.entitlements;
 				DEVELOPMENT_TEAM = 3H6K3KJDMH;
 				INFOPLIST_FILE = Taperum/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -573,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Taperum/Taperum.entitlements;
 				DEVELOPMENT_TEAM = 3H6K3KJDMH;
 				INFOPLIST_FILE = Taperum/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -641,6 +782,58 @@
 			};
 			name = Release;
 		};
+		8BE78B371EEF11F500320CEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3H6K3KJDMH;
+				INFOPLIST_FILE = "Taperum Notifications/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.TheGlassHouseStudios.Taperum.Taperum-Notifications";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8BE78B381EEF11F500320CEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3H6K3KJDMH;
+				INFOPLIST_FILE = "Taperum Notifications/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.TheGlassHouseStudios.Taperum.Taperum-Notifications";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		8BE78B511EEF238F00320CEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3H6K3KJDMH;
+				INFOPLIST_FILE = notifications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TheGlassHouseStudios.Taperum.notifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8BE78B521EEF238F00320CEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3H6K3KJDMH;
+				INFOPLIST_FILE = notifications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TheGlassHouseStudios.Taperum.notifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -676,6 +869,24 @@
 			buildConfigurations = (
 				8B82A5DD1EC4C870001C88D3 /* Debug */,
 				8B82A5DE1EC4C870001C88D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BE78B361EEF11F500320CEC /* Build configuration list for PBXNativeTarget "Taperum Notifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BE78B371EEF11F500320CEC /* Debug */,
+				8BE78B381EEF11F500320CEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BE78B501EEF238F00320CEC /* Build configuration list for PBXNativeTarget "notifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BE78B511EEF238F00320CEC /* Debug */,
+				8BE78B521EEF238F00320CEC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
