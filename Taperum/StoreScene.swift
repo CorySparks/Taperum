@@ -11,7 +11,7 @@ import UIKit
 import StoreKit
 
 
-class StoreScene: SKScene{
+class StoreScene: SKScene, SKPaymentTransactionObserver{
     
     weak var scrollView: CustomScrollView!
     let moveableNode = SKNode()
@@ -28,19 +28,46 @@ class StoreScene: SKScene{
     var BuyBtnNode4000: SKSpriteNode!
     var Coin4000CostLbl: SKLabelNode!
     
+    var Title: SKLabelNode!
+    var totalGoldLbl: SKLabelNode!
+    var MenuBtnNode: SKSpriteNode!
+    
+    var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold"){
+        didSet{
+            totalGoldLbl.text = "Total Gold: \(String(totalGold))"
+        }
+    }
+    
     var productID = ""
     var productsRequest = SKProductsRequest()
     var productsResponse = SKProductsResponse()
     var iapProducts = [SKProduct]()
     
     override func didMove(to view: SKView) {
+        
+        self.Title = SKLabelNode(fontNamed: "Arial Bold")
+        self.Title.text = "STORE"
+        self.Title.fontSize = 66
+        self.Title.horizontalAlignmentMode = .center
+        self.Title.position = CGPoint(x: 0, y: 300)
+        addChild(Title)
+        
+        self.totalGoldLbl = SKLabelNode(fontNamed: "Arial Bold")
+        self.totalGoldLbl.text = "Total Coins: \(String(totalGold))"
+        self.totalGoldLbl.fontSize = 30
+        self.totalGoldLbl.horizontalAlignmentMode = .center
+        self.totalGoldLbl.position = CGPoint(x: 0, y: 250)
+        addChild(totalGoldLbl)
+        
+        self.MenuBtnNode = self.childNode(withName: "MenuBtn") as! SKSpriteNode
+        
         scrollView = CustomScrollView.init(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height), scene: self, moveableNode: moveableNode, scrollDirection: .horizontal)
         scrollView.contentSize = CGSize(width: self.frame.size.width * 3, height: self.frame.size.height)
         view.addSubview(scrollView)
         
         addChild(moveableNode)
         
-        //###300 coins ad
+        //###300 coins IAP
         
         self.Coin300IAP = SKSpriteNode.init(texture: SKTexture(image: #imageLiteral(resourceName: "SmallStackCoins")), size: CGSize(width: (self.frame.size.width - 10), height: (self.frame.size.height / 1.8)))
         Coin300IAP.position = CGPoint(x: 0, y: 0)
@@ -60,7 +87,7 @@ class StoreScene: SKScene{
         Coin300IAP.addChild(BuyBtnNode300)
         Coin300IAP.addChild(Coin300CostLbl)
         
-        //###1700 coins ad
+        //###1700 coins IAP
         
         self.Coin1700IAP = SKSpriteNode.init(texture: SKTexture(image: #imageLiteral(resourceName: "MediumCoinStack")), size: CGSize(width: (self.frame.size.width - 10), height: (self.frame.size.height / 1.8)))
         Coin1700IAP.position = CGPoint(x: self.frame.midY + self.frame.size.width, y: 0)
@@ -80,7 +107,7 @@ class StoreScene: SKScene{
         Coin1700IAP.addChild(BuyBtnNode1700)
         Coin1700IAP.addChild(Coin1700CostLbl)
         
-        //###4000 coins ad
+        //###4000 coins IAP
         
         self.Coin4000IAP = SKSpriteNode.init(texture: SKTexture(image: #imageLiteral(resourceName: "TonsCoins")), size: CGSize(width: (self.frame.size.width - 10), height: (self.frame.size.height / 1.8)))
         Coin4000IAP.position = CGPoint(x: self.frame.midY + (self.frame.size.width * 2), y: 0)
@@ -112,7 +139,7 @@ class StoreScene: SKScene{
     func purchaseMyProduct(product: SKProduct) {
         if self.canMakePurchases(){
             let payment = SKPayment(product: product)
-            //SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
             
             print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
@@ -126,19 +153,16 @@ class StoreScene: SKScene{
         }
     }
     
-    // MARK: - FETCH AVAILABLE IAP PRODUCTS
     func fetchAvailableProducts()  {
-        
-        // Put here your IAP Products ID's
         let productIdentifiers = NSSet(objects:
-            "300CoinsTaperum",
-                                       "1700CoinsTaperum",
-                                       "4000CoinsTaperum"
+            "300CoinsTaperum", "1700CoinsTaperum", "4000CoinsTaperum"
         )
         
         productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
         productsRequest.delegate = self as? SKProductsRequestDelegate
         productsRequest.start()
+        
+        print(productsRequest)
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
@@ -155,6 +179,7 @@ class StoreScene: SKScene{
                         // Add 10 coins and save their total amount
                         let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 300
                         UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
+                        UserDefaults.standard.synchronize()
                         //make label for their total gold
                         
                         UIAlertView(title: "YAY!",
@@ -170,6 +195,7 @@ class StoreScene: SKScene{
                         // Add 10 coins and save their total amount
                         let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 1700
                         UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
+                        UserDefaults.standard.synchronize()
                         //make label for their total gold
                         
                         UIAlertView(title: "YAY!",
@@ -185,7 +211,7 @@ class StoreScene: SKScene{
                         // Add 10 coins and save their total amount
                         let newCoinAmount = UserDefaults.standard.integer(forKey: "totalGold") + 4000
                         UserDefaults.standard.set(newCoinAmount, forKey: "totalGold")
-                        //make label for their total gold
+                        UserDefaults.standard.synchronize()
                         
                         UIAlertView(title: "YAY!",
                                     message: "You've successfully bought 4000 extra coins!",
@@ -210,7 +236,6 @@ class StoreScene: SKScene{
                 }}}
     }
     
-    // MARK: - REQUEST IAP PRODUCTS
     func taperumProducts(_ request: SKProductsRequest, didReceive response: SKProductsResponse){
         print(response.products)
         if (response.products.count > 0){
@@ -226,20 +251,25 @@ class StoreScene: SKScene{
             let nodeArray = self.nodes(at: location)
             
             if(nodeArray.first?.name == "BuyBtn300"){
-                // MARK: - MAKE PURCHASE OF A PRODUCT
-                purchaseMyProduct(product: iapProducts[0])
+                if iapProducts.count > 0{
+                    purchaseMyProduct(product: iapProducts[0])
+                }
             } else if(nodeArray.first?.name == "BuyBtn1700"){
-                // MARK: - MAKE PURCHASE OF A PRODUCT
-                purchaseMyProduct(product: iapProducts[1])
+                if iapProducts.count > 0{
+                    purchaseMyProduct(product: iapProducts[1])
+                }
             } else if(nodeArray.first?.name == "BuyBtn4000"){
-                // MARK: - MAKE PURCHASE OF A PRODUCT
-                purchaseMyProduct(product: iapProducts[2])
+                if iapProducts.count > 0{
+                    purchaseMyProduct(product: iapProducts[2])
+                }
             }
             
-            if(nodeArray.first?.name == "Menu"){
+            if(nodeArray.first?.name == "MenuBtn"){
                 let transition = SKTransition.fade(withDuration: 1.0)
                 if let menuScene = MenuScene(fileNamed: "MenuScene"){
                     menuScene.scaleMode = .aspectFill
+                    scrollView.removeFromSuperview()
+                    moveableNode.removeFromParent()
                     
                     self.view?.presentScene(menuScene, transition: transition)
                 }

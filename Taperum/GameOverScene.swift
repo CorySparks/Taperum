@@ -8,6 +8,13 @@
 
 import SpriteKit
 import Social
+import UIKit
+import Foundation
+
+struct Constants{
+    static let adColonyAppID = "app2d48ffc3e2404f278f"
+    static let adColonyZoneID = "vzeffe8de1c8ce4102a8"
+}
 
 class GameOverScene: SKScene {
     
@@ -28,6 +35,27 @@ class GameOverScene: SKScene {
     var totalGold = UserDefaults.standard.integer(forKey: "totalGold")
     
     override func didMove(to view: SKView) {
+        //####VUNGLE####
+        var appID = "5942ea1625cbbb8e4f002a70"
+        //var sdk = VungleSDK.sharedSDK()
+        // start vungle publisher library
+        //sdk.startWithAppId(appID)
+        //####END VUNGLE####
+        
+        
+        //####ADCOLONY####
+        /*AdColony.configure(withAppID: Constants.adColonyAppID, zoneIDs: [Constants.adColonyZoneID], options: nil,
+                           completion:{(zones) in
+                            
+                            //AdColony has finished configuring, so let's request an interstitial ad
+                            self.requestInterstitial()
+                            
+                            //If the application has been inactive for a while, our ad might have expired so let's add a check for a nil ad object
+                            NotificationCenter.default.addObserver(self, selector:#selector(ViewController.onBecameActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+            }
+        )*/
+        //####END ADCOLONY####
+        
         self.scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         scoreLabel.text = "Score: \(score)"
         
@@ -55,6 +83,61 @@ class GameOverScene: SKScene {
             completion()
         }
     }
+    
+    //####ADCOLONY####
+    /*func requestInterstitial(){
+        //Request an interstitial ad from AdColony
+        AdColony.requestInterstitial(inZone: Constants.adColonyZoneID, options:nil,
+                                     
+                                     //Handler for successful ad requests
+            success:{(newAd) in
+                
+                //Once the ad has finished, set the loading state and request a new interstitial
+                newAd.setClose({
+                    self.ad = nil
+                    
+                    self.setLoadingState()
+                    self.requestInterstitial()
+                })
+                
+                //Interstitials can expire, so we need to handle that event also
+                newAd.setExpire({
+                    self.ad = nil
+                    
+                    self.setLoadingState()
+                    self.requestInterstitial()
+                })
+                
+                //Store a reference to the returned interstitial object
+                self.ad = newAd
+                
+                //Show the user we are ready to play a video
+                self.setReadyState()
+        },
+            
+            //Handler for failed ad requests
+            failure:{(error) in
+                NSLog("SAMPLE_APP: Request failed with error: " + error.localizedDescription + " and suggestion: " + error.localizedRecoverySuggestion!)
+        }
+        )
+    }
+    
+    func launchInterstitial(_ sender: AnyObject){
+        //Display our ad to the user
+        if let ad = self.ad {
+            if (!ad.expired) {
+                ad.show(withPresenting: self)
+            }
+        }
+    }
+    
+    func onBecameActive(){
+        //If our ad has expired, request a new interstitial
+        if (self.ad == nil) {
+            self.requestInterstitial()
+        }
+    }*/
+    //####END ADCOLONY####
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first

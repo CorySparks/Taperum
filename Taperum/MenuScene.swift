@@ -18,7 +18,7 @@ struct retardedSquare {
     var coins: Int?
 }
 
-class MenuScene: SKScene, Alert {
+class MenuScene: SKScene, Alert, GKGameCenterControllerDelegate {
     //This scene is just the start button and the character button
     
     public static let Coin300IAP = "com.com.TheGlassHouseStudios.Taperum.300CoinsTaperum"
@@ -42,6 +42,7 @@ class MenuScene: SKScene, Alert {
     var bestscoreLblNode: SKLabelNode!
     var CostLbl: SKLabelNode!
     var totalGoldLabelNode: SKLabelNode!
+    var characterName: SKLabelNode!
     var coinImg: SKShapeNode!
     var canPlay: Bool! = true
     
@@ -51,38 +52,20 @@ class MenuScene: SKScene, Alert {
     var bestScore = UserDefaults.standard.integer(forKey: "Best")
     var characterChoice = UserDefaults.standard.integer(forKey: "characterChoice")
     
-    var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100)]
+    var characterArray: [retardedSquare]! = [retardedSquare(name: "white", design: UIColor.white, doesNotCost: true, coins: 0), retardedSquare(name: "blue", design: UIColor.blue, doesNotCost: true, coins: 0), retardedSquare(name: "green", design: UIColor.green, doesNotCost: true, coins: 0), retardedSquare(name: "gray", design: UIColor.gray, doesNotCost: true, coins: 0), retardedSquare(name: "cyan", design: UIColor.cyan, doesNotCost: true, coins: 0), retardedSquare(name: "yellow", design: UIColor.yellow, doesNotCost: true, coins: 0), retardedSquare(name: "red", design: UIColor.red, doesNotCost: true, coins: 0) ,retardedSquare(name: "purple", design: UIColor.purple, doesNotCost: true, coins: 0), retardedSquare(name: "orange", design: UIColor.orange, doesNotCost: true, coins: 0), retardedSquare(name: "brown", design: UIColor.brown, doesNotCost: true, coins: 0), retardedSquare(name: "random", design: SKTexture(image: #imageLiteral(resourceName: "random")), doesNotCost: UserDefaults.standard.bool(forKey: "random"), coins: 50), retardedSquare(name: "mouse", design: SKTexture(image: #imageLiteral(resourceName: "mouse")), doesNotCost: UserDefaults.standard.bool(forKey: "mouse"), coins: 100), retardedSquare(name: "pizza", design: SKTexture(image: #imageLiteral(resourceName: "pizza")), doesNotCost: UserDefaults.standard.bool(forKey: "pizza"), coins: 100), retardedSquare(name: "yinYang", design: SKTexture(image: #imageLiteral(resourceName: "yinYangTaperum")), doesNotCost: UserDefaults.standard.bool(forKey: "yinYang"), coins: 50), retardedSquare(name: "gaming", design: SKTexture(image: #imageLiteral(resourceName: "Gaming")), doesNotCost: UserDefaults.standard.bool(forKey: "gaming"), coins: 150), retardedSquare(name: "weirdball1", design: SKTexture(image: #imageLiteral(resourceName: "weirdBall1Taperum")), doesNotCost: UserDefaults.standard.bool(forKey: "weirdball1"), coins: 200), retardedSquare(name: "weirdball2", design: SKTexture(image: #imageLiteral(resourceName: "WeirdBall2")), doesNotCost: UserDefaults.standard.bool(forKey: "weirdball2"), coins: 200), retardedSquare(name: "sunglasses", design: SKTexture(image: #imageLiteral(resourceName: "Sunglasses")), doesNotCost: UserDefaults.standard.bool(forKey: "sunglasses"), coins: 150), retardedSquare(name: "football", design: SKTexture(image: #imageLiteral(resourceName: "football")), doesNotCost: UserDefaults.standard.bool(forKey: "football"), coins: 50), retardedSquare(name: "granade", design: SKTexture(image: #imageLiteral(resourceName: "Granade")), doesNotCost: UserDefaults.standard.bool(forKey: "granade"), coins: 150)]
     
-    static let priceFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        
-        formatter.formatterBehavior = .behavior10_4
-        formatter.numberStyle = .currency
-        
-        return formatter
-    }()
-    
-    var buyButtonHandler: ((_ product: SKProduct) -> ())?
-    
-    var product: SKProduct? {
-        didSet {
-            //guard let product = product else { return }
-            
-            //textLabel?.text = product.localizedTitle
-            
-            if (IAPHelper.canMakePayments()){
-                
-            }else{
-                //"Not available"
-            }
+    var characterNameVar: Int = 0{
+        didSet{
+            characterName.text = "\(characterNameVar)"
         }
     }
+
     
     var characterIndex: Int! = 0
 
     var totalGold: Int! = UserDefaults.standard.integer(forKey: "totalGold"){
         didSet{
-            totalGoldLabelNode.text = ": \(String(totalGold))"
+            totalGoldLabelNode.text = "Total Coins: \(String(totalGold))"
         }
     }
     
@@ -111,20 +94,21 @@ class MenuScene: SKScene, Alert {
         
         addScoreAndSubmitToGC(bestScore as AnyObject)
         
-        self.coinImg = SKShapeNode.init(rectOf: CGSize.init(width: 60, height: 60))
-        if let coinImg = self.coinImg {
-            coinImg.fillColor = .white
-            coinImg.strokeColor = .clear
-            coinImg.fillTexture = SKTexture(image: #imageLiteral(resourceName: "coinGold"))
-            coinImg.position = CGPoint(x: -55, y: 10)
-        }
         
         self.totalGoldLabelNode = SKLabelNode(fontNamed: "Arial")
-        self.totalGoldLabelNode.text = ": \(String(totalGold))"
+        self.totalGoldLabelNode.fontSize = 25
+        self.totalGoldLabelNode.text = "Total Coins: \(String(totalGold))"
         self.totalGoldLabelNode.horizontalAlignmentMode = .center
-        self.totalGoldLabelNode.position = CGPoint(x: 15, y: -100)
+        self.totalGoldLabelNode.position = CGPoint(x: 0, y: -100)
         addChild(totalGoldLabelNode)
-        totalGoldLabelNode.addChild(coinImg)
+        
+        self.characterName = SKLabelNode(fontNamed: "Arial")
+        self.characterName.fontSize = 25
+        self.characterName.text = ""
+        self.characterName.horizontalAlignmentMode = .center
+        self.characterName.position = CGPoint(x: 0, y: -140)
+        characterNameVar = characterIndex
+        addChild(characterName)
         
         self.platform = SKShapeNode.init(rectOf: CGSize.init(width: self.size.width, height: (self.size.height / 2) / 2))
         self.base1 = SKShapeNode.init(rectOf: CGSize.init(width: baseSize, height: baseSize))
@@ -220,23 +204,18 @@ class MenuScene: SKScene, Alert {
     }
     
     func addScoreAndSubmitToGC(_ sender: AnyObject) {
-        
-        // Submit score to GC leaderboard
         let bestScoreInt = GKScore(leaderboardIdentifier: LEADERBOARD_ID)
         bestScoreInt.value = Int64(bestScore)
-        GKScore.report([bestScoreInt]) { (error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            } else {
-                print("Best Score submitted to your Leaderboard!")
-            }
-        }
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
     func checkGCLeaderboard(_ sender: AnyObject) {
-        let gcVC = GKGameCenterViewController()
-        gcVC.gameCenterDelegate = self as? GKGameCenterControllerDelegate
-        gcVC.viewState = .leaderboards
+        let gcVC: GKGameCenterViewController = GKGameCenterViewController()
+        gcVC.gameCenterDelegate = self
+        gcVC.viewState = GKGameCenterViewControllerState.leaderboards
         gcVC.leaderboardIdentifier = LEADERBOARD_ID
         self.view?.window?.rootViewController?.present(gcVC, animated: true, completion: nil)
     }
@@ -263,7 +242,7 @@ class MenuScene: SKScene, Alert {
                 
                 // Get the default leaderboard ID
                 localPlayer.loadDefaultLeaderboardIdentifier(completionHandler: { (leaderboardIdentifer, error) in
-                    if error != nil { print(error)
+                    if error != nil { print(error!)
                     } else { self.gcDefaultLeaderBoard = leaderboardIdentifer! }
                 })
                 
@@ -271,14 +250,14 @@ class MenuScene: SKScene, Alert {
                 // 3. Game center is not enabled on the users device
                 self.gcEnabled = false
                 print("Local player could not be authenticated!")
-                print(error)
+                print(error!)
             }
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        
+                
         if let location = touch?.location(in: self){
             let nodeArray = self.nodes(at: location)
             
@@ -303,12 +282,16 @@ class MenuScene: SKScene, Alert {
                 }
             }
             
-            
+            if(nodeArray.first?.name == "LeaderboardsBtn"){
+                checkGCLeaderboard(LEADERBOARD_ID as AnyObject)
+            }
         
             if(nodeArray.first?.name == "CharacterBtn"){
                 if(characterIndex != characterArray.count - 1){
+                    characterNameVar = characterIndex + 1
                     characterIndex? += 1
                 }else{
+                    characterNameVar = characterIndex + 1
                     characterIndex = 0
                 }
                 userDefaults.set(characterIndex, forKey: "characterChoice")
