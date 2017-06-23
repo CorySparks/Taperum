@@ -10,7 +10,7 @@
 		581A657A1D46D98F0056EA3D /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A65791D46D98F0056EA3D /* libz.1.2.5.tbd */; };
 		8B4EE92A1EFAC59400E0505B /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4EE9291EFAC59400E0505B /* VungleSDK.framework */; };
 		8B4EE9301EFAE06C00E0505B /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4EE92F1EFAE06C00E0505B /* GoogleMobileAds.framework */; };
-		8B4EE9361EFAFDF800E0505B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B4EE9351EFAFDF800E0505B /* Images.xcassets */; };
+		8BA29C0A1EFDD1B100405D3E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA29C091EFDD1B100405D3E /* Images.xcassets */; };
 		8BBD3C421EFA1BC8002DEAA6 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBD3C411EFA1BC8002DEAA6 /* MenuScene.swift */; };
 		8BBD3C441EFA1BD5002DEAA6 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8BBD3C431EFA1BD5002DEAA6 /* MenuScene.sks */; };
 		8BC0C63A1EFA20960015997A /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC0C6391EFA20960015997A /* AdColony.framework */; };
@@ -78,7 +78,7 @@
 		8B4EE9291EFAC59400E0505B /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = ../VungleSDK.framework; sourceTree = "<group>"; };
 		8B4EE92B1EFAC5E700E0505B /* AdColonyBasic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AdColonyBasic-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B4EE92F1EFAE06C00E0505B /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		8B4EE9351EFAFDF800E0505B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../../../.Trash/Images.xcassets; sourceTree = "<group>"; };
+		8BA29C091EFDD1B100405D3E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8BBD3C411EFA1BC8002DEAA6 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		8BBD3C431EFA1BD5002DEAA6 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		8BC0C6391EFA20960015997A /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 				8BC0C6531EFA22A40015997A /* tapSound.wav */,
 				8BC0C6541EFA22A40015997A /* thirdTut.sks */,
 				8BC0C6551EFA22A40015997A /* thirdTut.swift */,
-				8B4EE9351EFAFDF800E0505B /* Images.xcassets */,
+				8BA29C091EFDD1B100405D3E /* Images.xcassets */,
 				9F874CA41B95095000B9F8D5 /* LaunchScreen.storyboard */,
 				9FE091451A65B4F3001AA326 /* Frameworks */,
 				9FE091231A65B4CB001AA326 /* Supporting Files */,
@@ -401,9 +401,9 @@
 				8BC0C66E1EFA22A40015997A /* tapSound.wav in Resources */,
 				8BC0C66F1EFA22A40015997A /* thirdTut.sks in Resources */,
 				9FE0912B1A65B4CB001AA326 /* Main.storyboard in Resources */,
+				8BA29C0A1EFDD1B100405D3E /* Images.xcassets in Resources */,
 				8BC0C6591EFA22A40015997A /* fifthTut.sks in Resources */,
 				8BC0C6691EFA22A40015997A /* sixthTut.sks in Resources */,
-				8B4EE9361EFAFDF800E0505B /* Images.xcassets in Resources */,
 				8BC0C6671EFA22A40015997A /* secondTut.sks in Resources */,
 				8BC0C6661EFA22A40015997A /* playSound.wav in Resources */,
 				8BC0C65B1EFA22A40015997A /* finalTut.sks in Resources */,
